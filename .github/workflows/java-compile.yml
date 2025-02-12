@@ -23,7 +23,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Compile Java files
-      run: javac -d bin src/**/*.java
+      run: javac -d bin src/*.java
 
     - name: Execute Application
       run: java -cp bin JabberPoint
