@@ -23,9 +23,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Compile Java Files
-      run: |
-        mkdir -p out
-        javac -d out src/**/*.java
+      run: javac **/*.java
 
     - name: Execute JabberPoint application
-      run: java -cp out JabberPoint
+      run: java src.JabberPoint
