@@ -24,3 +24,6 @@ jobs:
 
     - name: Compile Java Files
       run: javac **/*.java
+
+    - name: Run Jabberpoint Application
+      run: java JabberPoint
