@@ -21,11 +21,28 @@ public class JabberPoint {
 	protected static final String JABERR = "Jabberpoint Error ";
 	protected static final String JABVERSION = "Jabberpoint 1.6 - OU version";
 
+	private static JabberPoint instance;
+
+	private JabberPoint(){
+
+	}
+
+	public static JabberPoint getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new JabberPoint();
+		}
+
+		return instance;
+	}
+
 	/** Het Main Programma */
-	public static void main(String argv[]) {
+	public static void main(String argv[])
+	{
 		
 		Style.createStyles();
-		Presentation presentation = new Presentation();
+		Presentation presentation = Presentation.getInstance();
 		new SlideViewerFrame(JABVERSION, presentation);
 		try {
 			if (argv.length == 0) { // een demo presentatie

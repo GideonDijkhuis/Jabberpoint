@@ -18,15 +18,21 @@ public class Presentation {
 	private ArrayList<Slide> showList = null; // een ArrayList met de Slides
 	private int currentSlideNumber = 0; // het slidenummer van de huidige Slide
 	private SlideViewerComponent slideViewComponent = null; // de viewcomponent voor de Slides
+	private static Presentation instance;
 
-	public Presentation() {
+	private Presentation() {
 		slideViewComponent = null;
 		clear();
 	}
 
-	public Presentation(SlideViewerComponent slideViewerComponent) {
-		this.slideViewComponent = slideViewerComponent;
-		clear();
+	public static Presentation getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new Presentation();
+		}
+
+		return instance;
 	}
 
 	public int getSize() {
