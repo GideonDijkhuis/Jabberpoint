@@ -45,10 +45,10 @@ public class JabberPoint {
 		Presentation presentation = Presentation.getInstance();
 		new SlideViewerFrame(JABVERSION, presentation);
 		try {
-			if (argv.length == 0) { // een demo presentatie
-				Accessor.getDemoAccessor().loadFile(presentation, "");
+			if (argv.length == 0) {
+				new AccessorFactory().createAccessor(AccessorType.DEMO).loadFile(presentation, "");
 			} else {
-				new XMLAccessor().loadFile(presentation, argv[0]);
+				new AccessorFactory().createAccessor(AccessorType.XML).loadFile(presentation, argv[0]);
 			}
 			presentation.setSlideNumber(0);
 		} catch (IOException ex) {

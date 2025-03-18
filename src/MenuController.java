@@ -14,13 +14,14 @@ import java.awt.event.ActionEvent;
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
- * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Command pattern
+ * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Command pattern and Factory Method
  */
 public class MenuController extends MenuBar {
 	
 	private Frame parent; // het frame, alleen gebruikt als ouder voor de Dialogs
 	private Presentation presentation; // Er worden commando's gegeven aan de presentatie
 	private CommandFactory commandFactory; // Factory for creating commands
+	private AccessorFactory accessorFactory; // Factory for creating accessors
 	
 	private static final long serialVersionUID = 227L;
 	
@@ -48,10 +49,12 @@ public class MenuController extends MenuBar {
 		parent = frame;
 		presentation = pres;
 		
-		// Initialize the command factory
+		// Initialize the factories
 		commandFactory = CommandFactory.getInstance();
 		commandFactory.setPresentation(presentation);
 		commandFactory.setFrame(parent);
+		
+		accessorFactory = AccessorFactory.getInstance();
 		
 		// Create the menu structure
 		createFileMenu();
