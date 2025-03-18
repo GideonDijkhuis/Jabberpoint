@@ -26,6 +26,7 @@ import java.io.IOException;
  */
 
 public class JabberPoint {
+	//Testing GitHub Workflow
 	protected static final String IOERR = "IO Error: ";
 	protected static final String JABERR = "Jabberpoint Error ";
 	protected static final String JABVERSION = "Jabberpoint 1.6 - OU version";
