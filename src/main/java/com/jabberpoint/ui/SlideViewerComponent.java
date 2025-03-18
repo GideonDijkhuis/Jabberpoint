@@ -1,6 +1,7 @@
 package main.java.com.jabberpoint.ui;
 
 import main.java.com.jabberpoint.model.*;
+import main.java.com.jabberpoint.model.observer.*;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,9 +20,10 @@ import javax.swing.JFrame;
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
+ * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Observer pattern
  */
 
-public class SlideViewerComponent extends JComponent {
+public class SlideViewerComponent extends JComponent implements Observer {
 		
 	private Slide slide; // de huidige slide
 	private Font labelFont = null; // het font voor labels
@@ -43,12 +45,18 @@ public class SlideViewerComponent extends JComponent {
 		presentation = pres;
 		labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
 		this.frame = frame;
+		
+		// Register as an observer
+		presentation.registerObserver(this);
 	}
 
 	public Dimension getPreferredSize() {
 		return new Dimension(Slide.WIDTH, Slide.HEIGHT);
 	}
 
+	/**
+	 * Legacy update method for backward compatibility
+	 */
 	public void update(Presentation presentation, Slide data) {
 		if (data == null) {
 			repaint();
@@ -59,8 +67,30 @@ public class SlideViewerComponent extends JComponent {
 		repaint();
 		frame.setTitle(presentation.getTitle());
 	}
+	
+	/**
+	 * Observer pattern update method
+	 */
+	@Override
+	public void update(Object subject, Object data) {
+		if (!(subject instanceof Presentation)) {
+			return;
+		}
+		
+		Presentation pres = (Presentation) subject;
+		this.presentation = pres;
+		
+		if (data instanceof Slide) {
+			this.slide = (Slide) data;
+		} else {
+			this.slide = pres.getCurrentSlide();
+		}
+		
+		repaint();
+		frame.setTitle(pres.getTitle());
+	}
 
-// teken de slide
+	// teken de slide
 	public void paintComponent(Graphics g) {
 		g.setColor(BGCOLOR);
 		g.fillRect(0, 0, getSize().width, getSize().height);

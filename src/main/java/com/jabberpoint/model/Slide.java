@@ -1,10 +1,13 @@
 package main.java.com.jabberpoint.model;
 
 import main.java.com.jabberpoint.util.*;
+import main.java.com.jabberpoint.model.observer.*;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /** <p>Een slide. Deze klasse heeft tekenfunctionaliteit.</p>
@@ -15,13 +18,17 @@ import java.util.Vector;
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
+ * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Observer pattern
  */
 
-public class Slide {
+public class Slide implements Subject {
 	public final static int WIDTH = 1200;
 	public final static int HEIGHT = 800;
 	protected String title; // de titel wordt apart bewaard
 	protected Vector<SlideItem> items; // de slide-items worden in een Vector bewaard
+	
+	// List of observers for the Observer pattern
+	private List<Observer> observers = new ArrayList<>();
 
 	public Slide() {
 		items = new Vector<SlideItem>();
@@ -30,6 +37,7 @@ public class Slide {
 	// Voeg een main.java.com.jabberpoint.model.SlideItem toe
 	public void append(SlideItem anItem) {
 		items.addElement(anItem);
+		notifyObservers();
 	}
 
 	// geef de titel van de slide
@@ -40,6 +48,7 @@ public class Slide {
 	// verander de titel van de slide
 	public void setTitle(String newTitle) {
 		title = newTitle;
+		notifyObservers();
 	}
 
 	// Maak een main.java.com.jabberpoint.util.TextItem van String, en voeg het main.java.com.jabberpoint.util.TextItem toe
@@ -82,5 +91,30 @@ public class Slide {
 	// geef de schaal om de slide te kunnen tekenen
 	private float getScale(Rectangle area) {
 		return Math.min(((float)area.width) / ((float)WIDTH), ((float)area.height) / ((float)HEIGHT));
+	}
+	
+	// Observer pattern methods
+	@Override
+	public void registerObserver(Observer observer) {
+		if (observer != null && !observers.contains(observer)) {
+			observers.add(observer);
+		}
+	}
+	
+	@Override
+	public void removeObserver(Observer observer) {
+		observers.remove(observer);
+	}
+	
+	@Override
+	public void notifyObservers() {
+		notifyObservers(null);
+	}
+	
+	@Override
+	public void notifyObservers(Object data) {
+		for (Observer observer : observers) {
+			observer.update(this, data);
+		}
 	}
 }

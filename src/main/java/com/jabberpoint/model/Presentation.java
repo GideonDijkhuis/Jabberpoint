@@ -1,9 +1,10 @@
 package main.java.com.jabberpoint.model;
 
 import main.java.com.jabberpoint.ui.*;
+import main.java.com.jabberpoint.model.observer.*;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  * <p>main.java.com.jabberpoint.model.Presentation houdt de slides in de presentatie bij.</p>
@@ -15,14 +16,18 @@ import java.util.ArrayList;
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
+ * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Observer pattern
  */
 
-public class Presentation {
+public class Presentation implements Subject {
 	private String showTitle; // de titel van de presentatie
 	private ArrayList<Slide> showList = null; // een ArrayList met de Slides
 	private int currentSlideNumber = 0; // het slidenummer van de huidige main.java.com.jabberpoint.model.Slide
 	private SlideViewerComponent slideViewComponent = null; // de viewcomponent voor de Slides
 	private static Presentation instance;
+	
+	// List of observers for the Observer pattern
+	private List<Observer> observers = new ArrayList<>();
 
 	private Presentation() {
 		slideViewComponent = null;
@@ -49,6 +54,7 @@ public class Presentation {
 
 	public void setTitle(String nt) {
 		showTitle = nt;
+		notifyObservers();
 	}
 
 	public void setShowView(SlideViewerComponent slideViewerComponent) {
@@ -63,9 +69,7 @@ public class Presentation {
 	// verander het huidige-slide-nummer en laat het aan het window weten.
 	public void setSlideNumber(int number) {
 		currentSlideNumber = number;
-		if (slideViewComponent != null) {
-			slideViewComponent.update(this, getCurrentSlide());
-		}
+		notifyObservers(getCurrentSlide());
 	}
 
 	// ga naar de vorige slide tenzij je aan het begin van de presentatie bent
@@ -91,6 +95,7 @@ public class Presentation {
 	// Voeg een slide toe aan de presentatie
 	public void append(Slide slide) {
 		showList.add(slide);
+		notifyObservers();
 	}
 
 	// Geef een slide met een bepaald slidenummer
@@ -98,7 +103,7 @@ public class Presentation {
 		if (number < 0 || number >= getSize()){
 			return null;
 	    }
-			return (Slide)showList.get(number);
+			return showList.get(number);
 	}
 
 	// Geef de huidige main.java.com.jabberpoint.model.Slide
@@ -108,5 +113,35 @@ public class Presentation {
 
 	public void exit(int n) {
 		System.exit(n);
+	}
+	
+	// Observer pattern methods
+	@Override
+	public void registerObserver(Observer observer) {
+		if (observer != null && !observers.contains(observer)) {
+			observers.add(observer);
+		}
+	}
+	
+	@Override
+	public void removeObserver(Observer observer) {
+		observers.remove(observer);
+	}
+	
+	@Override
+	public void notifyObservers() {
+		notifyObservers(null);
+	}
+	
+	@Override
+	public void notifyObservers(Object data) {
+		for (Observer observer : observers) {
+			observer.update(this, data);
+		}
+		
+		// For backward compatibility
+		if (slideViewComponent != null) {
+			slideViewComponent.update(this, getCurrentSlide());
+		}
 	}
 }

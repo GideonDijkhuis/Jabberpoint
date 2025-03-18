@@ -23,10 +23,10 @@ import java.io.IOException;
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Factory Method and main.java.com.jabberpoint.command.Command patterns
+ * @version 1.8 2023/09/30 Bram Huiskes - Updated to use Observer pattern
  */
 
 public class JabberPoint {
-	//Testing GitHub Workflow
 	protected static final String IOERR = "IO Error: ";
 	protected static final String JABERR = "Jabberpoint Error ";
 	protected static final String JABVERSION = "Jabberpoint 1.6 - OU version";
@@ -52,7 +52,11 @@ public class JabberPoint {
 	{
 		
 		Style.createStyles();
+		
+		// Create the presentation model (Subject in Observer pattern)
 		Presentation presentation = Presentation.getInstance();
+		
+		// Create the main frame (Observer in Observer pattern)
 		new SlideViewerFrame(JABVERSION, presentation);
 		
 		// Get the accessor factory
@@ -68,6 +72,8 @@ public class JabberPoint {
 				Accessor accessor = accessorFactory.getAccessorForFile(argv[0]);
 				accessor.loadFile(presentation, argv[0]);
 			}
+			
+			// This will trigger the Observer pattern updates
 			presentation.setSlideNumber(0);
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null,
