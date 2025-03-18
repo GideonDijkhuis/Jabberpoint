@@ -5,9 +5,6 @@ import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
 
 /** <p>De controller voor het menu</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -17,11 +14,13 @@ import javax.swing.JOptionPane;
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
+ * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Command pattern
  */
 public class MenuController extends MenuBar {
 	
 	private Frame parent; // het frame, alleen gebruikt als ouder voor de Dialogs
 	private Presentation presentation; // Er worden commando's gegeven aan de presentatie
+	private CommandFactory commandFactory; // Factory for creating commands
 	
 	private static final long serialVersionUID = 227L;
 	
@@ -48,83 +47,95 @@ public class MenuController extends MenuBar {
 	public MenuController(Frame frame, Presentation pres) {
 		parent = frame;
 		presentation = pres;
+		
+		// Initialize the command factory
+		commandFactory = CommandFactory.getInstance();
+		commandFactory.setPresentation(presentation);
+		commandFactory.setFrame(parent);
+		
+		// Create the menu structure
+		createFileMenu();
+		createViewMenu();
+		createHelpMenu();
+	}
+	
+	private void createFileMenu() {
 		MenuItem menuItem;
 		Menu fileMenu = new Menu(FILE);
+		
+		// Open command
+		Command openCommand = commandFactory.createOpenCommand(TESTFILE);
 		fileMenu.add(menuItem = mkMenuItem(OPEN));
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.clear();
-				Accessor xmlAccessor = new XMLAccessor();
-				try {
-					xmlAccessor.loadFile(presentation, TESTFILE);
-					presentation.setSlideNumber(0);
-				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc, 
-         			LOADERR, JOptionPane.ERROR_MESSAGE);
-				}
-				parent.repaint();
-			}
-		} );
+		menuItem.addActionListener(createActionListener(openCommand));
+		
+		// New command
+		Command newCommand = commandFactory.createNewCommand();
 		fileMenu.add(menuItem = mkMenuItem(NEW));
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.clear();
-				parent.repaint();
-			}
-		});
+		menuItem.addActionListener(createActionListener(newCommand));
+		
+		// Save command
+		Command saveCommand = commandFactory.createSaveCommand(SAVEFILE);
 		fileMenu.add(menuItem = mkMenuItem(SAVE));
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Accessor xmlAccessor = new XMLAccessor();
-				try {
-					xmlAccessor.saveFile(presentation, SAVEFILE);
-				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc, 
-							SAVEERR, JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
+		menuItem.addActionListener(createActionListener(saveCommand));
+		
 		fileMenu.addSeparator();
+		
+		// Exit command
+		Command exitCommand = commandFactory.createExitCommand();
 		fileMenu.add(menuItem = mkMenuItem(EXIT));
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.exit(0);
-			}
-		});
+		menuItem.addActionListener(createActionListener(exitCommand));
+		
 		add(fileMenu);
+	}
+	
+	private void createViewMenu() {
+		MenuItem menuItem;
 		Menu viewMenu = new Menu(VIEW);
+		
+		// Next slide command
+		Command nextCommand = commandFactory.createNextSlideCommand();
 		viewMenu.add(menuItem = mkMenuItem(NEXT));
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.nextSlide();
-			}
-		});
+		menuItem.addActionListener(createActionListener(nextCommand));
+		
+		// Previous slide command
+		Command prevCommand = commandFactory.createPrevSlideCommand();
 		viewMenu.add(menuItem = mkMenuItem(PREV));
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.prevSlide();
-			}
-		});
+		menuItem.addActionListener(createActionListener(prevCommand));
+		
+		// Go to slide command
+		Command gotoCommand = commandFactory.createGotoCommand(PAGENR);
 		viewMenu.add(menuItem = mkMenuItem(GOTO));
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				String pageNumberStr = JOptionPane.showInputDialog((Object)PAGENR);
-				int pageNumber = Integer.parseInt(pageNumberStr);
-				presentation.setSlideNumber(pageNumber - 1);
-			}
-		});
+		menuItem.addActionListener(createActionListener(gotoCommand));
+		
 		add(viewMenu);
+	}
+	
+	private void createHelpMenu() {
+		MenuItem menuItem;
 		Menu helpMenu = new Menu(HELP);
+		
+		// About command
+		Command aboutCommand = commandFactory.createAboutCommand();
 		helpMenu.add(menuItem = mkMenuItem(ABOUT));
-		menuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				AboutBox.show(parent);
+		menuItem.addActionListener(createActionListener(aboutCommand));
+		
+		setHelpMenu(helpMenu); // needed for portability (Motif, etc.)
+	}
+	
+	/**
+	 * Create an ActionListener that executes a command
+	 * @param command The command to execute
+	 * @return ActionListener that executes the command
+	 */
+	private ActionListener createActionListener(final Command command) {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				command.execute();
 			}
-		});
-		setHelpMenu(helpMenu);		// nodig for portability (Motif, etc.).
+		};
 	}
 
-// een menu-item aanmaken
+	// Create a menu item
 	public MenuItem mkMenuItem(String name) {
 		return new MenuItem(name, new MenuShortcut(name.charAt(0)));
 	}

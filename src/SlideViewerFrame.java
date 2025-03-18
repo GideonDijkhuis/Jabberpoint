@@ -12,6 +12,7 @@ import javax.swing.JFrame;
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
+ * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Command pattern
 */
 
 public class SlideViewerFrame extends JFrame {
@@ -38,8 +39,16 @@ public class SlideViewerFrame extends JFrame {
 				}
 			});
 		getContentPane().add(slideViewerComponent);
-		addKeyListener(new KeyController(presentation)); // een controller toevoegen
-		setMenuBar(new MenuController(this, presentation));	// nog een controller toevoegen
+		
+		// Initialize the CommandFactory
+		CommandFactory factory = CommandFactory.getInstance();
+		factory.setPresentation(presentation);
+		factory.setFrame(this);
+		
+		// Add controllers
+		addKeyListener(new KeyController(presentation));
+		setMenuBar(new MenuController(this, presentation));
+		
 		setSize(new Dimension(WIDTH, HEIGHT)); // Dezelfde maten als Slide hanteert.
 		setVisible(true);
 	}

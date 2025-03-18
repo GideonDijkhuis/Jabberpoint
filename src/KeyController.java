@@ -1,5 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.util.HashMap;
+import java.util.Map;
 
 /** <p>This is the KeyController (KeyListener)</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -9,34 +11,52 @@ import java.awt.event.KeyAdapter;
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
+ * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Command pattern
 */
 
 public class KeyController extends KeyAdapter {
-	private Presentation presentation; // Er worden commando's gegeven aan de presentatie
+	private Map<Integer, Command> keyCommands = new HashMap<>(); // Map of key codes to commands
+	private Map<Character, Command> charCommands = new HashMap<>(); // Map of characters to commands
 
-	public KeyController(Presentation p) {
-		presentation = p;
+	public KeyController(Presentation presentation) {
+		// Get the command factory and set the presentation
+		CommandFactory factory = CommandFactory.getInstance();
+		factory.setPresentation(presentation);
+		
+		// Get commands from factory
+		Command nextSlideCommand = factory.createNextSlideCommand();
+		Command prevSlideCommand = factory.createPrevSlideCommand();
+		Command exitCommand = factory.createExitCommand();
+		
+		// Register key commands
+		keyCommands.put(KeyEvent.VK_PAGE_DOWN, nextSlideCommand);
+		keyCommands.put(KeyEvent.VK_DOWN, nextSlideCommand);
+		keyCommands.put(KeyEvent.VK_ENTER, nextSlideCommand);
+		keyCommands.put(KeyEvent.VK_PAGE_UP, prevSlideCommand);
+		keyCommands.put(KeyEvent.VK_UP, prevSlideCommand);
+		
+		// Register character commands
+		charCommands.put('+', nextSlideCommand);
+		charCommands.put('-', prevSlideCommand);
+		charCommands.put('q', exitCommand);
+		charCommands.put('Q', exitCommand);
 	}
 
 	public void keyPressed(KeyEvent keyEvent) {
-		switch(keyEvent.getKeyCode()) {
-			case KeyEvent.VK_PAGE_DOWN:
-			case KeyEvent.VK_DOWN:
-			case KeyEvent.VK_ENTER:
-			case '+':
-				presentation.nextSlide();
-				break;
-			case KeyEvent.VK_PAGE_UP:
-			case KeyEvent.VK_UP:
-			case '-':
-				presentation.prevSlide();
-				break;
-			case 'q':
-			case 'Q':
-				System.exit(0);
-				break; // wordt nooit bereikt als het goed is
-			default:
-				break;
+		int keyCode = keyEvent.getKeyCode();
+		char keyChar = keyEvent.getKeyChar();
+		
+		// Check if there's a command for this key code
+		Command command = keyCommands.get(keyCode);
+		if (command != null) {
+			command.execute();
+			return;
+		}
+		
+		// Check if there's a command for this character
+		command = charCommands.get(keyChar);
+		if (command != null) {
+			command.execute();
 		}
 	}
 }
