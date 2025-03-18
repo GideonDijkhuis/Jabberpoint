@@ -23,5 +23,8 @@ jobs:
         distribution: 'temurin'
 
     - name: Compile Java files
-      run: javac -d bin src/main/java -name "*.java"
+      run: |
+        mkdir -p bin
+        find src/main/java -name "*.java" > sources.txt
+        javac -d bin @sources.txt
       
