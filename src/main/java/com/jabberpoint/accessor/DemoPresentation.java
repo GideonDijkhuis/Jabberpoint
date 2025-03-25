@@ -15,6 +15,7 @@ import java.io.IOException;
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  * @version 1.7 2023/09/29 Bram Huiskes - Updated for Factory Method pattern
+ * @version 1.8 2023/09/30 Bram Huiskes - Fixed image loading in demo
  */
 
 public class DemoPresentation extends Accessor {
@@ -47,7 +48,7 @@ public class DemoPresentation extends Accessor {
 		slide.append(2, "use File->Open from the menu.");
 		slide.append(1, " ");
 		slide.append(1, "This is the end of the presentation.");
-		slide.append(new BitmapItem(1, "main.java.com.jabberpoint.JabberPoint.jpg"));
+		slide.append(new BitmapItem(1, "JabberPoint.jpg"));
 		presentation.append(slide);
 	}
 
