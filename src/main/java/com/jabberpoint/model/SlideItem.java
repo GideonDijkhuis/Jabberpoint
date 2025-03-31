@@ -19,13 +19,12 @@ import java.util.List;
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  * @version 1.7 2023/09/30 Bram Huiskes - Updated to use Observer pattern
+ * @version 1.8 Gideon Dijkhuis - Updated finals
 */
 
 public abstract class SlideItem implements Subject {
 	private int level = 0; // het level van het slideitem
-	
-	// List of observers for the Observer pattern
-    private List<Observer> observers = new ArrayList<>();
+	private final List<Observer> observers = new ArrayList<>();
 
 	public SlideItem(int lev) {
 		level = lev;

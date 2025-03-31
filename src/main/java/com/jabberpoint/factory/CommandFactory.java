@@ -63,11 +63,11 @@ public class CommandFactory {
      */
     private void initializeReceivers() {
         if (presentation != null) {
-            navigationReceiver = new NavigationReceiver(presentation);
+            navigationReceiver = new NavigationReceiver();
             
             if (frame != null) {
                 fileReceiver = new FileReceiver(presentation, frame);
-                applicationReceiver = new ApplicationReceiver(presentation, frame);
+                applicationReceiver = new ApplicationReceiver(frame);
             }
         }
     }

@@ -1,5 +1,6 @@
 package main.java.com.jabberpoint.receiver;
 
+import main.java.com.jabberpoint.JabberPoint;
 import main.java.com.jabberpoint.model.*;
 import main.java.com.jabberpoint.ui.*;
 
@@ -10,18 +11,18 @@ import java.awt.Frame;
  * <p>This class knows how to perform operations on the application</p>
  * @author Bram Huiskes
  * @version 1.0
+ * @version 1.1 Gideon Dijkhuis - Updated finals
  */
 public class ApplicationReceiver implements Receiver {
-    private Presentation presentation;
-    private Frame frame;
+    private final JabberPoint jabberPoint;
+    private final Frame frame;
     
     /**
      * Constructor for main.java.com.jabberpoint.receiver.ApplicationReceiver
-     * @param presentation The presentation for application operations
      * @param frame The parent frame for dialogs
      */
-    public ApplicationReceiver(Presentation presentation, Frame frame) {
-        this.presentation = presentation;
+    public ApplicationReceiver(Frame frame) {
+        this.jabberPoint = JabberPoint.getInstance();
         this.frame = frame;
     }
     
@@ -29,7 +30,7 @@ public class ApplicationReceiver implements Receiver {
      * Exit the application
      */
     public void exit() {
-        presentation.exit(0);
+        this.jabberPoint.exit(0);
     }
     
     /**

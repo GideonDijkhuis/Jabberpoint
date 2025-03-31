@@ -13,11 +13,12 @@ import java.awt.Frame;
  * <p>This class knows how to perform file operations on a presentation</p>
  * @author Bram Huiskes
  * @version 1.0
+ * @version 1.1 Gideon Dijkhuis - Updated finals
  */
 public class FileReceiver implements Receiver {
-    private Presentation presentation;
-    private Frame frame;
-    private AccessorFactory accessorFactory;
+    private final Presentation presentation;
+    private final Frame frame;
+    private final AccessorFactory accessorFactory;
     
     // Error messages
     private static final String IOEX = "IO Exception: ";

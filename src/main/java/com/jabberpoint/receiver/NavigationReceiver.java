@@ -7,16 +7,16 @@ import main.java.com.jabberpoint.model.*;
  * <p>This class knows how to perform navigation operations on a presentation</p>
  * @author Bram Huiskes
  * @version 1.0
+ * @version 1.1 Gideon Dijkhuis - Updated presentation with instances
  */
 public class NavigationReceiver implements Receiver {
-    private Presentation presentation;
+    private final Presentation presentation = Presentation.getInstance();
     
     /**
      * Constructor for main.java.com.jabberpoint.receiver.NavigationReceiver
-     * @param presentation The presentation to navigate through
      */
-    public NavigationReceiver(Presentation presentation) {
-        this.presentation = presentation;
+    public NavigationReceiver() {
+
     }
     
     /**

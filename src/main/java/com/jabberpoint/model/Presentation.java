@@ -16,7 +16,9 @@ import java.util.List;
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
- * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Observer pattern
+ * @version 1.7 Gideon Dijkhuis - Updated Jabberpoint with instances
+ * @version 1.8 2023/09/29 Bram Huiskes - Updated to use Observer pattern
+ * @version 1.8 Gideon Dijkhuis - Updated finals, deleted Exit method
  */
 
 public class Presentation implements Subject {
@@ -25,9 +27,7 @@ public class Presentation implements Subject {
 	private int currentSlideNumber = 0; // het slidenummer van de huidige main.java.com.jabberpoint.model.Slide
 	private SlideViewerComponent slideViewComponent = null; // de viewcomponent voor de Slides
 	private static Presentation instance;
-	
-	// List of observers for the Observer pattern
-	private List<Observer> observers = new ArrayList<>();
+	private final List<Observer> observers = new ArrayList<>();
 
 	private Presentation() {
 		slideViewComponent = null;
@@ -109,10 +109,6 @@ public class Presentation implements Subject {
 	// Geef de huidige main.java.com.jabberpoint.model.Slide
 	public Slide getCurrentSlide() {
 		return getSlide(currentSlideNumber);
-	}
-
-	public void exit(int n) {
-		System.exit(n);
 	}
 	
 	// Observer pattern methods

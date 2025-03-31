@@ -22,8 +22,9 @@ import java.io.IOException;
  * @version 1.4 2007/07/16 Sylvia Stuurman
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
- * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Factory Method and main.java.com.jabberpoint.command.Command patterns
- * @version 1.8 2023/09/30 Bram Huiskes - Updated to use Observer pattern
+ * @version 1.7 Gideon Dijkhuis - Updated Jabberpoint with instances
+ * @version 1.8 2023/09/29 Bram Huiskes - Updated to use Factory Method and main.java.com.jabberpoint.command.Command patterns
+ * @version 1.9 2023/09/30 Bram Huiskes - Updated to use Observer pattern
  */
 
 public class JabberPoint {
@@ -47,8 +48,13 @@ public class JabberPoint {
 		return instance;
 	}
 
+	public void exit(int n)
+	{
+		System.exit(n);
+	}
+
 	/** Het Main Programma */
-	public static void main(String argv[])
+	public static void main(String[] args)
 	{
 		
 		Style.createStyles();
@@ -63,14 +69,14 @@ public class JabberPoint {
 		AccessorFactory accessorFactory = AccessorFactory.getInstance();
 		
 		try {
-			if (argv.length == 0) { // een demo presentatie
+			if (args.length == 0) { // een demo presentatie
 				// Get demo accessor from factory
 				Accessor demoAccessor = accessorFactory.createDemoAccessor();
 				demoAccessor.loadFile(presentation, "");
 			} else {
 				// Get appropriate accessor for the file
-				Accessor accessor = accessorFactory.getAccessorForFile(argv[0]);
-				accessor.loadFile(presentation, argv[0]);
+				Accessor accessor = accessorFactory.getAccessorForFile(args[0]);
+				accessor.loadFile(presentation, args[0]);
 			}
 			
 			// This will trigger the Observer pattern updates
