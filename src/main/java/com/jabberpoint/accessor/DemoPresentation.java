@@ -16,19 +16,19 @@ import java.io.IOException;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  * @version 1.7 2023/09/29 Bram Huiskes - Updated for Factory Method pattern
  * @version 1.8 2023/09/30 Bram Huiskes - Fixed image loading in demo
+ * @version 1.9 - Gideon Dijkhuis - Changed Java paths to normal text
  */
 
 public class DemoPresentation extends Accessor {
 
 	public void loadFile(Presentation presentation, String unusedFilename) {
-		presentation.setTitle("Demo main.java.com.jabberpoint.model.Presentation");
+		presentation.setTitle("Demo Presentation");
 		Slide slide;
 		slide = new Slide();
-		slide.setTitle("main.java.com.jabberpoint.JabberPoint");
+		slide.setTitle("JabberPoint");
 		slide.append(1, "The Java presentation tool");
 		slide.append(2, "Copyright (c) 1996-2000: Ian Darwin");
 		slide.append(2, "Copyright (c) 2000-now: Gert Florijn and Sylvia Stuurman");
-		slide.append(4, "Calling showSlide...");
 		presentation.append(slide);
 
 		slide = new Slide();

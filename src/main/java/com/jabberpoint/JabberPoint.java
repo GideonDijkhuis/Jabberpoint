@@ -25,6 +25,7 @@ import java.io.IOException;
  * @version 1.7 Gideon Dijkhuis - Updated Jabberpoint with instances
  * @version 1.8 2023/09/29 Bram Huiskes - Updated to use Factory Method and main.java.com.jabberpoint.command.Command patterns
  * @version 1.9 2023/09/30 Bram Huiskes - Updated to use Observer pattern
+ * @version 2.0 - Gideon Dijkhuis - Update classes to instances
  */
 
 public class JabberPoint {
@@ -63,7 +64,7 @@ public class JabberPoint {
 		Presentation presentation = Presentation.getInstance();
 		
 		// Create the main frame (Observer in Observer pattern)
-		new SlideViewerFrame(JABVERSION, presentation);
+		SlideViewerFrame.getInstance(JABVERSION, presentation);
 		
 		// Get the accessor factory
 		AccessorFactory accessorFactory = AccessorFactory.getInstance();

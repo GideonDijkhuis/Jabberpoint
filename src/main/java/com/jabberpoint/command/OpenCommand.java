@@ -1,24 +1,29 @@
 package main.java.com.jabberpoint.command;
-
+import javax.swing.JFileChooser;
 import main.java.com.jabberpoint.receiver.*;
+import main.java.com.jabberpoint.ui.SlideViewerFrame;
+
+import java.io.File;
 
 /**
  * <p>main.java.com.jabberpoint.command.OpenCommand implements the main.java.com.jabberpoint.command.Command interface to open a presentation file</p>
  * @author Bram Huiskes
  * @version 1.0
+ * @version 1.1 - Gideon Dijkhuis - Added testfile, added OpenFileDialog
  */
 public class OpenCommand implements Command {
-    private FileReceiver receiver;
+    private final FileReceiver receiver;
     private String filename;
-    
+
+    protected static final String TESTFILE = "test.xml";
+
     /**
      * Constructor for main.java.com.jabberpoint.command.OpenCommand
      * @param receiver The receiver that will handle the file operation
-     * @param filename The filename to open
      */
-    public OpenCommand(FileReceiver receiver, String filename) {
+    public OpenCommand(FileReceiver receiver) {
         this.receiver = receiver;
-        this.filename = filename;
+        this.filename = TESTFILE;
     }
     
     /**
@@ -26,6 +31,14 @@ public class OpenCommand implements Command {
      */
     @Override
     public void execute() {
-        receiver.openPresentation(filename);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(SlideViewerFrame.getInstance());
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            this.filename = fileChooser.getSelectedFile().getAbsolutePath();
+        }
+
+        this.receiver.openPresentation(this.filename);
     }
 } 

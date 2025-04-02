@@ -19,6 +19,7 @@ import java.util.List;
  * @version 1.7 Gideon Dijkhuis - Updated Jabberpoint with instances
  * @version 1.8 2023/09/29 Bram Huiskes - Updated to use Observer pattern
  * @version 1.8 Gideon Dijkhuis - Updated finals, deleted Exit method
+ * @version 1.9 Gideon Dijkhuis - Updated slideNr checks
  */
 
 public class Presentation implements Subject {
@@ -67,23 +68,32 @@ public class Presentation implements Subject {
 	}
 
 	// verander het huidige-slide-nummer en laat het aan het window weten.
-	public void setSlideNumber(int number) {
-		currentSlideNumber = number;
+	public void setSlideNumber(int slideNr) {
+		if (!isSlideNRAvailable(slideNr)) {
+			return;
+		}
+
+		currentSlideNumber = slideNr;
 		notifyObservers(getCurrentSlide());
 	}
 
 	// ga naar de vorige slide tenzij je aan het begin van de presentatie bent
 	public void prevSlide() {
-		if (currentSlideNumber > 0) {
+		if (isSlideNRAvailable(this.currentSlideNumber - 1)) {
 			setSlideNumber(currentSlideNumber - 1);
 	    }
 	}
 
 	// Ga naar de volgende slide tenzij je aan het einde van de presentatie bent.
 	public void nextSlide() {
-		if (currentSlideNumber < (showList.size()-1)) {
-			setSlideNumber(currentSlideNumber + 1);
+		if (this.isSlideNRAvailable(this.currentSlideNumber + 1)) {
+			setSlideNumber(this.currentSlideNumber + 1);
 		}
+	}
+
+	public boolean isSlideNRAvailable(int slideNr)
+	{
+		return slideNr < this.showList.size() && slideNr >= 0;
 	}
 
 	// Verwijder de presentatie, om klaar te zijn voor de volgende

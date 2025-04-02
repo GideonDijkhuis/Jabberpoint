@@ -21,6 +21,7 @@ import javax.swing.JFrame;
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Observer pattern
+ * @version 1.8 - Gideon Dijkhuis - Rename Java paths to normal text, created variable in instanceOfMethod
  */
 
 public class SlideViewerComponent extends JComponent implements Observer {
@@ -73,12 +74,11 @@ public class SlideViewerComponent extends JComponent implements Observer {
 	 */
 	@Override
 	public void update(Object subject, Object data) {
-		if (!(subject instanceof Presentation)) {
+		if (!(subject instanceof Presentation pres)) {
 			return;
 		}
-		
-		Presentation pres = (Presentation) subject;
-		this.presentation = pres;
+
+        this.presentation = pres;
 		
 		if (data instanceof Slide) {
 			this.slide = (Slide) data;
@@ -86,7 +86,7 @@ public class SlideViewerComponent extends JComponent implements Observer {
 			this.slide = pres.getCurrentSlide();
 		}
 		
-		repaint();
+		this.repaint();
 		frame.setTitle(pres.getTitle());
 	}
 
@@ -99,7 +99,7 @@ public class SlideViewerComponent extends JComponent implements Observer {
 		}
 		g.setFont(labelFont);
 		g.setColor(COLOR);
-		g.drawString("main.java.com.jabberpoint.model.Slide " + (1 + presentation.getSlideNumber()) + " of " +
+		g.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
                  presentation.getSize(), XPOS, YPOS);
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
 		slide.draw(g, area, this);

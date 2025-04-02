@@ -20,6 +20,7 @@ import javax.swing.JFrame;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  * @version 1.7 2023/09/29 Bram Huiskes - Updated to use main.java.com.jabberpoint.command.Command pattern
  * @version 1.8 2023/09/30 Bram Huiskes - Updated to use Observer pattern
+ * @version 1.9 - Gideon Dijkhuis - Created Instances for SlideViewerFrame
 */
 
 public class SlideViewerFrame extends JFrame implements Observer {
@@ -28,10 +29,11 @@ public class SlideViewerFrame extends JFrame implements Observer {
 	private static final String JABTITLE = "Jabberpoint 1.6 - OU";
 	public final static int WIDTH = 1200;
 	public final static int HEIGHT = 800;
+	private final Presentation presentation;
+
+	private static SlideViewerFrame instance;
 	
-	private Presentation presentation;
-	
-	public SlideViewerFrame(String title, Presentation presentation) {
+	private SlideViewerFrame(String title, Presentation presentation) {
 		super(title);
 		this.presentation = presentation;
 		
@@ -41,6 +43,24 @@ public class SlideViewerFrame extends JFrame implements Observer {
 		SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation, this);
 		presentation.setShowView(slideViewerComponent);
 		setupWindow(slideViewerComponent, presentation);
+	}
+
+	public static SlideViewerFrame getInstance()
+	{
+		if (instance == null)
+		{
+			throw new RuntimeException("Instance is null");
+		}
+
+		return instance;
+	}
+
+	public static SlideViewerFrame getInstance(String title, Presentation presentation) {
+		if (instance == null) {
+			instance = new SlideViewerFrame(title, presentation);
+		}
+
+		return instance;
 	}
 
 	// De GUI opzetten
@@ -76,8 +96,6 @@ public class SlideViewerFrame extends JFrame implements Observer {
 			Presentation pres = (Presentation) subject;
 			setTitle(JABTITLE + " - " + pres.getTitle());
 		} else if (subject instanceof Slide) {
-			// If the slide itself changes, we could update the title or other UI elements
-			// For now, we just ensure the frame title is up to date
 			setTitle(JABTITLE + " - " + presentation.getTitle());
 		}
 	}

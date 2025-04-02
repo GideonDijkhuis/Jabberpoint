@@ -11,6 +11,7 @@ import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 
 /** <p>De controller voor het menu</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -21,14 +22,13 @@ import java.awt.event.ActionEvent;
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  * @version 1.7 2023/09/29 Bram Huiskes - Updated to use main.java.com.jabberpoint.command.Command pattern and Factory Method
+ * @version 1.8 - Gideon Dijkhuis - Made some variables final, create local variables and update openCommand
  */
 public class MenuController extends MenuBar {
-	
-	private Frame parent; // het frame, alleen gebruikt als ouder voor de Dialogs
-	private Presentation presentation; // Er worden commando's gegeven aan de presentatie
-	private CommandFactory commandFactory; // Factory for creating commands
-	private AccessorFactory accessorFactory; // Factory for creating accessors
-	
+
+    private final CommandFactory commandFactory; // Factory for creating commands
+
+    @Serial
 	private static final long serialVersionUID = 227L;
 	
 	protected static final String ABOUT = "About";
@@ -44,7 +44,6 @@ public class MenuController extends MenuBar {
 	protected static final String SAVE = "Save";
 	protected static final String VIEW = "View";
 	
-	protected static final String TESTFILE = "test.xml";
 	protected static final String SAVEFILE = "dump.xml";
 	
 	protected static final String IOEX = "IO Exception: ";
@@ -52,15 +51,16 @@ public class MenuController extends MenuBar {
 	protected static final String SAVEERR = "Save Error";
 
 	public MenuController(Frame frame, Presentation pres) {
-		parent = frame;
-		presentation = pres;
-		
-		// Initialize the factories
+        // het frame, alleen gebruikt als ouder voor de Dialogs
+        // Er worden commando's gegeven aan de presentatie
+
+        // Initialize the factories
 		commandFactory = CommandFactory.getInstance();
-		commandFactory.setPresentation(presentation);
-		commandFactory.setFrame(parent);
-		
-		accessorFactory = AccessorFactory.getInstance();
+		commandFactory.setPresentation(pres);
+		commandFactory.setFrame(frame);
+
+        // Factory for creating accessors
+        AccessorFactory accessorFactory = AccessorFactory.getInstance();
 		
 		// Create the menu structure
 		createFileMenu();
@@ -73,7 +73,7 @@ public class MenuController extends MenuBar {
 		Menu fileMenu = new Menu(FILE);
 		
 		// Open command
-		Command openCommand = commandFactory.createOpenCommand(TESTFILE);
+		Command openCommand = commandFactory.createOpenCommand();
 		fileMenu.add(menuItem = mkMenuItem(OPEN));
 		menuItem.addActionListener(createActionListener(openCommand));
 		

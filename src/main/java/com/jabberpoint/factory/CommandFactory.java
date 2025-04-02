@@ -11,6 +11,7 @@ import java.awt.Frame;
  * <p>This class centralizes the creation of main.java.com.jabberpoint.command.Command objects</p>
  * @author Bram Huiskes
  * @version 1.0
+ * @version 1.1 - Gideon Dijkhuis - Deleted filename at openCommand
  */
 public class CommandFactory {
     private static CommandFactory instance;
@@ -98,11 +99,10 @@ public class CommandFactory {
     
     /**
      * Create an main.java.com.jabberpoint.command.OpenCommand
-     * @param filename The filename to open
      * @return A new main.java.com.jabberpoint.command.OpenCommand
      */
-    public Command createOpenCommand(String filename) {
-        return new OpenCommand(fileReceiver, filename);
+    public Command createOpenCommand() {
+        return new OpenCommand(fileReceiver);
     }
     
     /**
