@@ -13,24 +13,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    - name: Create Maven Cache directory
-      run: mkdir -p ~/.m2
-
-    - name: Compile Java files
-      run: |
-        mkdir -p bin
-        find src/main/java -name "*.java" > sources.txt
-        javac -d bin @sources.txt
+      - name: Compile Java files
+        run: |
+          mkdir -p bin
+          find src/main/java -name "*.java" > sources.txt
+          javac -d bin @sources.txt
 
   build:
     runs-on: ubuntu-latest
@@ -47,12 +43,3 @@ jobs:
 
       - name: Compile project
         run: mvn compile
-
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      
