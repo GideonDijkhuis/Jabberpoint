@@ -26,14 +26,6 @@ jobs:
     - name: Create Maven Cache directory
       run: mkdir -p ~/.m2
 
-    - name: Cache Maven dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-
     - name: Compile Java files
       run: |
         mkdir -p bin
@@ -55,4 +47,12 @@ jobs:
 
       - name: Compile project
         run: mvn compile
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       
