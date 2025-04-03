@@ -38,6 +38,7 @@ public class XMLAccessor extends Accessor {
     
     /** Names of xml tags of attributes */
     protected static final String SLIDETAG = "slide";
+    protected static final String SHOWTITLETAG = "showtitle";
     protected static final String TITLETAG = "title";
     protected static final String ITEMTAG = "item";
     protected static final String LEVELTAG = "level";
@@ -63,7 +64,7 @@ public class XMLAccessor extends Accessor {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();    
 			Document document = builder.parse(new File(filename)); // Create a JDOM document
 			Element doc = document.getDocumentElement();
-			presentation.setTitle(getTitle(doc, TITLETAG));
+			presentation.setTitle(getTitle(doc, SHOWTITLETAG));
 
 			NodeList slides = doc.getElementsByTagName(SLIDETAG);
 			max = slides.getLength();
