@@ -21,6 +21,7 @@ import javax.swing.JFrame;
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  * @version 1.7 2023/09/29 Bram Huiskes - Updated to use Observer pattern
+ * @version 1.8 2023/09/30 Bram Huiskes - Fixed display issues in slide counter
  */
 
 public class SlideViewerComponent extends JComponent implements Observer {
@@ -99,7 +100,7 @@ public class SlideViewerComponent extends JComponent implements Observer {
 		}
 		g.setFont(labelFont);
 		g.setColor(COLOR);
-		g.drawString("main.java.com.jabberpoint.model.Slide " + (1 + presentation.getSlideNumber()) + " of " +
+		g.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
                  presentation.getSize(), XPOS, YPOS);
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
 		slide.draw(g, area, this);
