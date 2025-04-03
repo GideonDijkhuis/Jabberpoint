@@ -124,7 +124,7 @@ public class XMLAccessor extends Accessor {
 	public void saveFile(Presentation presentation, String filename) throws IOException {
 		PrintWriter out = new PrintWriter(new FileWriter(filename));
 		out.println("<?xml version=\"1.0\"?>");
-		out.println("<!DOCTYPE presentation SYSTEM \"presentation.dtd\">");
+		out.println("<!DOCTYPE presentation SYSTEM \"jabberpoint.dtd\">");
 		out.println("<presentation>");
 		out.print("<title>");
 		out.print(presentation.getTitle());

@@ -1,5 +1,7 @@
 package main.java.com.jabberpoint.command;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+
 import main.java.com.jabberpoint.receiver.*;
 import main.java.com.jabberpoint.ui.SlideViewerFrame;
 
@@ -33,6 +35,26 @@ public class OpenCommand implements Command {
     public void execute() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+
+        fileChooser.addChoosableFileFilter(new FileFilter()
+        {
+            @Override
+            public boolean accept(File f)
+            {
+                if (f.isDirectory()) {
+                    return true;
+                } else {
+                    return f.getName().toLowerCase().endsWith(".xml");
+                }
+            }
+
+            @Override
+            public String getDescription()
+            {
+                return "XML documents";
+            }
+        });
+
         int result = fileChooser.showOpenDialog(SlideViewerFrame.getInstance());
 
         if (result == JFileChooser.APPROVE_OPTION) {
