@@ -29,5 +29,14 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Compile project
+      - name: Compile maven project
         run: mvn compile
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run maven tests
+        run: mvn test
