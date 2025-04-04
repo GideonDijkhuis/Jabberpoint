@@ -21,8 +21,8 @@ import java.util.Map;
 */
 
 public class KeyController extends KeyAdapter {
-	private Map<Integer, Command> keyCommands = new HashMap<>(); // Map of key codes to commands
-	private Map<Character, Command> charCommands = new HashMap<>(); // Map of characters to commands
+	private final Map<Integer, Command> keyCommands = new HashMap<>(); // Map of key codes to commands
+	private final Map<Character, Command> charCommands = new HashMap<>(); // Map of characters to commands
 
 	public KeyController(Presentation presentation) {
 		// Get the command factory and set the presentation

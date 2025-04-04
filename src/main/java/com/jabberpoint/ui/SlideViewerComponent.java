@@ -3,11 +3,7 @@ package main.java.com.jabberpoint.ui;
 import main.java.com.jabberpoint.model.*;
 import main.java.com.jabberpoint.model.observer.*;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -49,6 +45,15 @@ public class SlideViewerComponent extends JComponent implements Observer {
 		
 		// Register as an observer
 		presentation.registerObserver(this);
+	}
+
+	public Slide getSlide() {
+		return this.slide;
+	}
+
+	public Frame getFrame()
+	{
+		return this.frame;
 	}
 
 	public Dimension getPreferredSize() {

@@ -8,7 +8,7 @@ import main.java.com.jabberpoint.receiver.*;
  * @version 1.0
  */
 public class NewCommand implements Command {
-    private FileReceiver receiver;
+    private final FileReceiver receiver;
     
     /**
      * Constructor for main.java.com.jabberpoint.command.NewCommand

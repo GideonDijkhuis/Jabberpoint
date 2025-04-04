@@ -8,7 +8,7 @@ import main.java.com.jabberpoint.receiver.*;
  * @version 1.0
  */
 public class ExitCommand implements Command {
-    private ApplicationReceiver receiver;
+    private final ApplicationReceiver receiver;
 
     /**
      * Constructor for main.java.com.jabberpoint.command.ExitCommand

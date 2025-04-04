@@ -3,6 +3,7 @@ package accessor;
 import main.java.com.jabberpoint.accessor.DemoPresentation;
 import main.java.com.jabberpoint.model.*;
 import main.java.com.jabberpoint.util.BitmapItem;
+import main.java.com.jabberpoint.util.Style;
 import main.java.com.jabberpoint.util.TextItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,8 @@ class DemoPresentationTest {
 
     @BeforeEach
     void setUp() {
+        Style.createStyles();
+
         this.demoPresentation = new DemoPresentation();
         this.presentation = Presentation.getInstance();
         this.presentation.clear();

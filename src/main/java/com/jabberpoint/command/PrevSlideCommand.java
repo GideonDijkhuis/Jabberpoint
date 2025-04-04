@@ -8,7 +8,7 @@ import main.java.com.jabberpoint.receiver.*;
  * @version 1.0
  */
 public class PrevSlideCommand implements Command {
-    private NavigationReceiver receiver;
+    private final NavigationReceiver receiver;
 
     /**
      * Constructor for main.java.com.jabberpoint.command.PrevSlideCommand

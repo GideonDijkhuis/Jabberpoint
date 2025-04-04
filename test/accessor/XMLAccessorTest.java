@@ -4,6 +4,7 @@ import main.java.com.jabberpoint.accessor.Accessor;
 import main.java.com.jabberpoint.factory.AccessorFactory;
 import main.java.com.jabberpoint.model.*;
 import main.java.com.jabberpoint.util.BitmapItem;
+import main.java.com.jabberpoint.util.Style;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
@@ -27,6 +28,8 @@ class XMLAccessorTest {
 
     @BeforeEach
     void setUp() {
+        Style.createStyles();
+
         this.xmlAccessor = AccessorFactory.getInstance().createXMLAccessor();
         this.presentation = Presentation.getInstance();
         this.presentation.clear();

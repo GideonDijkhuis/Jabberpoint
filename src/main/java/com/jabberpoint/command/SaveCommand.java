@@ -13,8 +13,8 @@ import java.io.File;
  * @version 1.0
  */
 public class SaveCommand implements Command {
-    private FileReceiver receiver;
-    private String filename;
+    private final FileReceiver receiver;
+    private final String filename;
     
     /**
      * Constructor for main.java.com.jabberpoint.command.SaveCommand

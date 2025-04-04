@@ -44,7 +44,7 @@ public class MenuController extends MenuBar {
 	protected static final String SAVE = "Save";
 	protected static final String VIEW = "View";
 	
-	protected static final String SAVEFILE = "dump.xml";
+	public static final String SAVEFILE = "dump.xml";
 	
 	protected static final String IOEX = "IO Exception: ";
 	protected static final String LOADERR = "Load Error";
@@ -136,7 +136,7 @@ public class MenuController extends MenuBar {
 	 * @param command The command to execute
 	 * @return ActionListener that executes the command
 	 */
-	private ActionListener createActionListener(final Command command) {
+	public ActionListener createActionListener(final Command command) {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				command.execute();

@@ -5,6 +5,7 @@ import main.java.com.jabberpoint.command.*;
 import main.java.com.jabberpoint.factory.CommandFactory;
 import main.java.com.jabberpoint.model.*;
 import main.java.com.jabberpoint.ui.SlideViewerFrame;
+import main.java.com.jabberpoint.util.Style;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -11,9 +11,9 @@ import java.awt.Frame;
  * @version 1.0
  */
 public class GotoCommand implements Command {
-    private NavigationReceiver receiver;
-    private Frame frame;
-    private String prompt;
+    private final NavigationReceiver receiver;
+    private final Frame frame;
+    private final String prompt;
     
     /**
      * Constructor for main.java.com.jabberpoint.command.GotoCommand
