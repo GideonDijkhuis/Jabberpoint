@@ -27,7 +27,7 @@ jobs:
     needs: setup
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Run code-style
         run: java -jar code-style/checkstyle-10.23.0-all.jar -c code-style/checkstyle.xml src/
@@ -47,7 +47,32 @@ jobs:
     needs: compile
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Run maven tests
         run: mvn test
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [ test, code-style ]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Build Pom.xml with Maven
+        run: |
+          mvn -B package --file pom.xml
+          echo "Built files in target directory:"
+          ls -l target/
+
+      - name: Rename JAR file
+        run: |
+          echo "Looking for JAR files:"
+          find target -name "*.jar"
+          cp target/jabberpoint-1.0.0.jar JabberPoint.jar
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: jabberpoint-jar
+          path: JabberPoint.jar
