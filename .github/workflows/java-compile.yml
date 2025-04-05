@@ -22,18 +22,29 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-  build:
+  code-formatter:
     runs-on: ubuntu-latest
     needs: setup
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run code-quality
+        run: java -jar code-style/checkstyle-10.23.0-all.jar -c code-style/checkstyle.xml src/
+
+  compile:
+    runs-on: ubuntu-latest
+    needs: code-formatter
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
       - name: Compile maven project
         run: mvn compile
+
   test:
     runs-on: ubuntu-latest
-    needs: build
+    needs: compile
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
