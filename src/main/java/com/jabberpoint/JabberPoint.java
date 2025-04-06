@@ -1,84 +1,91 @@
 package main.java.com.jabberpoint;
 
-import main.java.com.jabberpoint.accessor.*;
-import main.java.com.jabberpoint.factory.*;
-import main.java.com.jabberpoint.model.*;
-import main.java.com.jabberpoint.ui.*;
-import main.java.com.jabberpoint.util.*;
-
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
-import java.io.IOException;
+import main.java.com.jabberpoint.accessor.Accessor;
+import main.java.com.jabberpoint.factory.AccessorFactory;
+import main.java.com.jabberpoint.model.Presentation;
+import main.java.com.jabberpoint.ui.SlideViewerFrame;
+import main.java.com.jabberpoint.util.Style;
 
 /**
- * main.java.com.jabberpoint.JabberPoint Main Programma
- * <p>This program is distributed under the terms of the accompanying
- * COPYRIGHT.txt file (which is NOT the GNU General Public License). Please read it. Your use of the software
- * constitutes acceptance of the terms in the COPYRIGHT.txt file.</p>
+ * JabberPoint Main Program
+ * <p>
+ * This program is distributed under the conditions of the attached COPYRIGHT.txt file (which is NOT the GNU General
+ * Public License). Please read it. Your use of the software constitutes acceptance of the conditions mentioned in
+ * COPYRIGHT.txt.
+ * </p>
  *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
+ * SOLID Principles: - Single Responsibility Principle: Only responsible for application startup and lifecycle
+ * management. - Open/Closed Principle: Can be extended for new startup options without modifying existing code. -
+ * Liskov Substitution Principle: Singleton instance can be safely used throughout the application. - Interface
+ * Segregation Principle: Provides focused methods related to application control. - Dependency Inversion Principle:
+ * Depends on abstractions (Accessor, Presentation) rather than concrete implementations.
+ *
  * @version 2.0 - Gideon Dijkhuis - Update classes to instances
  */
-
-public class JabberPoint
-{
-    protected static final String IOERR = "IO Error: ";
-    protected static final String JABERR = "Jabberpoint Error ";
-    protected static final String JABVERSION = "Jabberpoint 1.6 - OU version";
+public class JabberPoint {
+    protected static final String IO_ERR = "IO Error: ";
+    protected static final String JAB_ERR = "Jabberpoint Error ";
+    protected static final String JAB_VERSION = "Jabberpoint 1.6 - OU version";
 
     private static JabberPoint instance;
 
-    private JabberPoint()
-    {
-
+    /**
+     * Private constructor for singleton pattern.
+     */
+    private JabberPoint() {
     }
 
-    public static JabberPoint getInstance()
-    {
-        if (instance == null)
-        {
+    /**
+     * Gets the singleton instance of JabberPoint.
+     *
+     * @return The singleton instance
+     */
+    public static JabberPoint getInstance() {
+        if (instance == null) {
             instance = new JabberPoint();
         }
-
         return instance;
     }
 
-    public void exit(int n)
-    {
+    /**
+     * Exits the application with the specified exit code.
+     *
+     * @param n The exit code
+     */
+    public void exit(int n) {
         System.exit(n);
     }
 
-    public static void main(String[] args)
-    {
-
+    /**
+     * Main method to start the application.
+     *
+     * @param args Command line arguments, optionally containing a filename
+     */
+    public static void main(String[] args) {
         Style.createStyles();
-
         Presentation presentation = Presentation.getInstance();
-
-        SlideViewerFrame.getInstance(JABVERSION, presentation);
-
+        SlideViewerFrame.getInstance(JAB_VERSION, presentation);
         AccessorFactory accessorFactory = AccessorFactory.getInstance();
 
-        try
-        {
-            if (args.length == 0)
-            {
+        try {
+            if (args.length == 0) {
                 Accessor demoAccessor = accessorFactory.createDemoAccessor();
                 demoAccessor.loadFile(presentation, "");
             }
-            else
-            {
+            else {
                 Accessor accessor = accessorFactory.getAccessorForFile(args[0]);
                 accessor.loadFile(presentation, args[0]);
             }
-
             presentation.setSlideNumber(0);
         }
-        catch (IOException ex)
-        {
+        catch (IOException ex) {
             JOptionPane.showMessageDialog(
                     null,
-                    IOERR + ex, JABERR,
+                    IO_ERR + ex,
+                    JAB_ERR,
                     JOptionPane.ERROR_MESSAGE
             );
         }
