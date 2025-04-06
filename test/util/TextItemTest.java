@@ -46,6 +46,6 @@ class TextItemTest {
 
     @Test
     void toString_returnsStringRepresentation() {
-        assertEquals("main.java.com.jabberpoint.util.TextItem[1,Test Text]", this.textItem.toString());
+        assertEquals("TextItem[1,Test Text]", this.textItem.toString());
     }
 }
