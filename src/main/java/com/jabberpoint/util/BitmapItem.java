@@ -14,15 +14,13 @@ import javax.imageio.ImageIO;
 import main.java.com.jabberpoint.model.SlideItem;
 
 /**
- * A bitmap image item that can be displayed on a slide.
- * Bitmap items are responsible for drawing themselves.
+ * A bitmap image item that can be displayed on a slide. Bitmap items are responsible for drawing themselves.
  *
- * SOLID Principles:
- * - Single Responsibility Principle: Only responsible for loading and displaying bitmap images.
- * - Open/Closed Principle: Can be extended with new image loading methods without modifying existing code.
- * - Liskov Substitution Principle: Properly extends SlideItem without changing its behavior.
- * - Interface Segregation Principle: Implements only necessary methods from SlideItem.
- * - Dependency Inversion Principle: Uses abstractions (Graphics, ImageObserver) rather than concrete implementations.
+ * SOLID Principles: - Single Responsibility Principle: Only responsible for loading and displaying bitmap images. -
+ * Open/Closed Principle: Can be extended with new image loading methods without modifying existing code. - Liskov
+ * Substitution Principle: Properly extends SlideItem without changing its behavior. - Interface Segregation Principle:
+ * Implements only necessary methods from SlideItem. - Dependency Inversion Principle: Uses abstractions (Graphics,
+ * ImageObserver) rather than concrete implementations.
  *
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
  * @version 1.7 2023/09/30 Bram Huiskes - Updated to fix image loading
@@ -38,9 +36,9 @@ public class BitmapItem extends SlideItem {
 
     /**
      * Creates a bitmap item with the specified level and image name.
-     * 
+     *
      * @param level The level of the bitmap item
-     * @param name The name of the image file
+     * @param name  The name of the image file
      */
     public BitmapItem(int level, String name) {
         super(level);
@@ -57,7 +55,7 @@ public class BitmapItem extends SlideItem {
 
     /**
      * Gets the name of the image.
-     * 
+     *
      * @return The name of the image
      */
     public String getName() {
@@ -65,12 +63,8 @@ public class BitmapItem extends SlideItem {
     }
 
     /**
-     * Loads the image from various locations.
-     * Will try to load from:
-     * 1. Direct file path
-     * 2. Resources
-     * 3. Classpath
-     * 4. Project root
+     * Loads the image from various locations. Will try to load from: 1. Direct file path 2. Resources 3. Classpath 4.
+     * Project root
      */
     private void loadImage() {
         if (this.imageName == null) {
@@ -87,7 +81,8 @@ public class BitmapItem extends SlideItem {
                     return;
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.err.println("Error loading from file: " + e.getMessage());
         }
 
@@ -101,7 +96,8 @@ public class BitmapItem extends SlideItem {
                     return;
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.err.println("Error loading from resource: " + e.getMessage());
         }
 
@@ -113,7 +109,8 @@ public class BitmapItem extends SlideItem {
                     return;
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.err.println("Error loading from classpath: " + e.getMessage());
         }
 
@@ -125,7 +122,8 @@ public class BitmapItem extends SlideItem {
                     return;
                 }
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.err.println("Error loading from project root: " + e.getMessage());
         }
 
@@ -134,11 +132,11 @@ public class BitmapItem extends SlideItem {
 
     /**
      * Gets the bounding box for this bitmap item.
-     * 
-     * @param g The graphics context
+     *
+     * @param g        The graphics context
      * @param observer The image observer
-     * @param scale The scale factor
-     * @param myStyle The style to apply
+     * @param scale    The scale factor
+     * @param myStyle  The style to apply
      * @return The bounding rectangle
      */
     public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style myStyle) {
@@ -159,12 +157,12 @@ public class BitmapItem extends SlideItem {
 
     /**
      * Draws the bitmap item on the screen.
-     * 
-     * @param x The x-coordinate
-     * @param y The y-coordinate
-     * @param scale The scale factor
-     * @param g The graphics context
-     * @param myStyle The style to apply
+     *
+     * @param x        The x-coordinate
+     * @param y        The y-coordinate
+     * @param scale    The scale factor
+     * @param g        The graphics context
+     * @param myStyle  The style to apply
      * @param observer The image observer
      */
     public void draw(int x, int y, float scale, Graphics g, Style myStyle, ImageObserver observer) {
@@ -187,7 +185,7 @@ public class BitmapItem extends SlideItem {
 
     /**
      * Returns a string representation of this bitmap item.
-     * 
+     *
      * @return The string representation
      */
     public String toString() {

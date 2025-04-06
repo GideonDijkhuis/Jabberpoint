@@ -5,7 +5,6 @@ import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.MenuShortcut;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
 
@@ -16,16 +15,14 @@ import main.java.com.jabberpoint.model.Presentation;
 
 /**
  * Controller for the menu bar with file, view and help options.
- * 
- * SOLID Principles:
- * - Single Responsibility Principle: Only responsible for creating and managing the menu interface.
- * - Open/Closed Principle: New menu items can be added without modifying existing code.
- * - Liskov Substitution Principle: Properly extends MenuBar without changing its behavior.
- * - Interface Segregation Principle: Creates focused action listeners that handle specific commands.
- * - Dependency Inversion Principle: Depends on abstractions (Command interface) rather than concrete implementations.
+ *
+ * SOLID Principles: - Single Responsibility Principle: Only responsible for creating and managing the menu interface. -
+ * Open/Closed Principle: New menu items can be added without modifying existing code. - Liskov Substitution Principle:
+ * Properly extends MenuBar without changing its behavior. - Interface Segregation Principle: Creates focused action
+ * listeners that handle specific commands. - Dependency Inversion Principle: Depends on abstractions (Command
+ * interface) rather than concrete implementations.
  */
-public class MenuController extends MenuBar
-{
+public class MenuController extends MenuBar {
 
     private final CommandFactory commandFactory;
 
@@ -55,10 +52,9 @@ public class MenuController extends MenuBar
      * Creates a menu controller with file, view and help menus.
      *
      * @param frame The parent frame for the menu
-     * @param pres The presentation to control
+     * @param pres  The presentation to control
      */
-    public MenuController(Frame frame, Presentation pres)
-    {
+    public MenuController(Frame frame, Presentation pres) {
         this.commandFactory = CommandFactory.getInstance();
         this.commandFactory.setPresentation(pres);
         this.commandFactory.setFrame(frame);
@@ -73,8 +69,7 @@ public class MenuController extends MenuBar
     /**
      * Creates the file menu with open, new, save and exit options.
      */
-    private void createFileMenu()
-    {
+    private void createFileMenu() {
         MenuItem menuItem;
         Menu fileMenu = new Menu(FILE);
 
@@ -102,8 +97,7 @@ public class MenuController extends MenuBar
     /**
      * Creates the view menu with next, previous and goto options.
      */
-    private void createViewMenu()
-    {
+    private void createViewMenu() {
         MenuItem menuItem;
         Menu viewMenu = new Menu(VIEW);
 
@@ -125,8 +119,7 @@ public class MenuController extends MenuBar
     /**
      * Creates the help menu with about option.
      */
-    private void createHelpMenu()
-    {
+    private void createHelpMenu() {
         MenuItem menuItem;
         Menu helpMenu = new Menu(HELP);
 
@@ -139,23 +132,21 @@ public class MenuController extends MenuBar
 
     /**
      * Creates an action listener that executes the given command.
-     * 
+     *
      * @param command The command to execute
      * @return An ActionListener that executes the command
      */
-    public ActionListener createActionListener(final Command command)
-    {
+    public ActionListener createActionListener(final Command command) {
         return e -> command.execute();
     }
 
     /**
      * Creates a menu item with a keyboard shortcut.
-     * 
+     *
      * @param name The name of the menu item
      * @return The created menu item
      */
-    public MenuItem mkMenuItem(String name)
-    {
+    public MenuItem mkMenuItem(String name) {
         return new MenuItem(name, new MenuShortcut(name.charAt(0)));
     }
 }

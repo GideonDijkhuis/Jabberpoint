@@ -9,8 +9,7 @@ package main.java.com.jabberpoint.model.observer;
  *
  * Interface for the Observer in the Observer pattern.
  */
-public interface Observer
-{
+public interface Observer {
     /**
      * Called when the observed subject changes.
      * 

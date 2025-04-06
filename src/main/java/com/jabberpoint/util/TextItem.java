@@ -19,28 +19,25 @@ import main.java.com.jabberpoint.model.SlideItem;
 
 /**
  * Text item that can be displayed on a slide.
- * 
- * SOLID Principles:
- * - Single Responsibility Principle: Only responsible for displaying and formatting text on slides.
- * - Open/Closed Principle: Can be extended for new text formatting capabilities without modifying existing code.
- * - Liskov Substitution Principle: Properly extends SlideItem without changing its behavior.
- * - Interface Segregation Principle: Implements only necessary methods from SlideItem.
- * - Dependency Inversion Principle: Depends on abstractions (Graphics, ImageObserver) rather than concrete implementations.
+ *
+ * SOLID Principles: - Single Responsibility Principle: Only responsible for displaying and formatting text on slides. -
+ * Open/Closed Principle: Can be extended for new text formatting capabilities without modifying existing code. - Liskov
+ * Substitution Principle: Properly extends SlideItem without changing its behavior. - Interface Segregation Principle:
+ * Implements only necessary methods from SlideItem. - Dependency Inversion Principle: Depends on abstractions
+ * (Graphics, ImageObserver) rather than concrete implementations.
  */
-public class TextItem extends SlideItem
-{
+public class TextItem extends SlideItem {
     private final String text;
 
     private static final String EMPTYTEXT = "No Text Given";
 
     /**
      * Creates a text item with the specified level and text.
-     * 
-     * @param level The level of the text item
+     *
+     * @param level  The level of the text item
      * @param string The text content
      */
-    public TextItem(int level, String string)
-    {
+    public TextItem(int level, String string) {
         super(level);
         this.text = string;
     }
@@ -48,30 +45,27 @@ public class TextItem extends SlideItem
     /**
      * Creates an empty text item with default level.
      */
-    public TextItem()
-    {
+    public TextItem() {
         this(0, EMPTYTEXT);
     }
 
     /**
      * Gets the text content of this item.
-     * 
+     *
      * @return The text content
      */
-    public String getText()
-    {
+    public String getText() {
         return this.text == null ? "" : this.text;
     }
 
     /**
      * Creates an attributed string with the appropriate style.
-     * 
+     *
      * @param style The style to apply
      * @param scale The scale factor
      * @return The attributed string
      */
-    public AttributedString getAttributedString(Style style, float scale)
-    {
+    public AttributedString getAttributedString(Style style, float scale) {
         AttributedString attrStr = new AttributedString(getText());
         attrStr.addAttribute(TextAttribute.FONT, style.getFont(scale), 0, this.text.length());
         return attrStr;
@@ -79,29 +73,25 @@ public class TextItem extends SlideItem
 
     /**
      * Gets the bounding box for this text item.
-     * 
-     * @param g The graphics context
+     *
+     * @param g        The graphics context
      * @param observer The image observer
-     * @param scale The scale factor
-     * @param myStyle The style to apply
+     * @param scale    The scale factor
+     * @param myStyle  The style to apply
      * @return The bounding rectangle
      */
     public Rectangle getBoundingBox(
             Graphics g, ImageObserver observer,
             float scale, Style myStyle
-    )
-    {
+    ) {
         List<TextLayout> layouts = getLayouts(g, myStyle, scale);
         int xsize = 0, ysize = (int) (myStyle.leading * scale);
-        for (TextLayout layout : layouts)
-        {
+        for (TextLayout layout : layouts) {
             Rectangle2D bounds = layout.getBounds();
-            if (bounds.getWidth() > xsize)
-            {
+            if (bounds.getWidth() > xsize) {
                 xsize = (int) bounds.getWidth();
             }
-            if (bounds.getHeight() > 0)
-            {
+            if (bounds.getHeight() > 0) {
                 ysize += (int) bounds.getHeight();
             }
             ysize += (int) (layout.getLeading() + layout.getDescent());
@@ -111,21 +101,19 @@ public class TextItem extends SlideItem
 
     /**
      * Draws the text item on the screen.
-     * 
-     * @param x The x-coordinate
-     * @param y The y-coordinate
-     * @param scale The scale factor
-     * @param g The graphics context
+     *
+     * @param x       The x-coordinate
+     * @param y       The y-coordinate
+     * @param scale   The scale factor
+     * @param g       The graphics context
      * @param myStyle The style to apply
-     * @param o The image observer
+     * @param o       The image observer
      */
     public void draw(
             int x, int y, float scale, Graphics g,
             Style myStyle, ImageObserver o
-    )
-    {
-        if (this.text == null || this.text.isEmpty())
-        {
+    ) {
+        if (this.text == null || this.text.isEmpty()) {
             return;
         }
         List<TextLayout> layouts = getLayouts(g, myStyle, scale);
@@ -135,8 +123,7 @@ public class TextItem extends SlideItem
         );
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(myStyle.color);
-        for (TextLayout layout : layouts)
-        {
+        for (TextLayout layout : layouts) {
             pen.y += (int) layout.getAscent();
             layout.draw(g2d, pen.x, pen.y);
             pen.y += (int) layout.getDescent();
@@ -145,22 +132,20 @@ public class TextItem extends SlideItem
 
     /**
      * Creates the text layouts for this text item.
-     * 
-     * @param g The graphics context
-     * @param s The style to apply
+     *
+     * @param g     The graphics context
+     * @param s     The style to apply
      * @param scale The scale factor
      * @return The list of text layouts
      */
-    private List<TextLayout> getLayouts(Graphics g, Style s, float scale)
-    {
+    private List<TextLayout> getLayouts(Graphics g, Style s, float scale) {
         List<TextLayout> layouts = new ArrayList<TextLayout>();
         AttributedString attrStr = getAttributedString(s, scale);
         Graphics2D g2d = (Graphics2D) g;
         FontRenderContext frc = g2d.getFontRenderContext();
         LineBreakMeasurer measurer = new LineBreakMeasurer(attrStr.getIterator(), frc);
         float wrappingWidth = (Slide.WIDTH - s.indent) * scale;
-        while (measurer.getPosition() < getText().length())
-        {
+        while (measurer.getPosition() < getText().length()) {
             TextLayout layout = measurer.nextLayout(wrappingWidth);
             layouts.add(layout);
         }
@@ -169,11 +154,10 @@ public class TextItem extends SlideItem
 
     /**
      * Returns a string representation of this text item.
-     * 
+     *
      * @return The string representation
      */
-    public String toString()
-    {
+    public String toString() {
         return "TextItem[" + getLevel() + "," + getText() + "]";
     }
 }

@@ -15,13 +15,12 @@ import main.java.com.jabberpoint.model.observer.Observer;
 
 /**
  * Component that displays the current slide of the presentation.
- * 
- * SOLID Principles:
- * - Single Responsibility Principle: Only responsible for displaying slides and responding to presentation changes.
- * - Open/Closed Principle: Can be extended for new display functionality without modifying existing code.
- * - Liskov Substitution Principle: Properly extends JComponent and implements Observer without changing their behavior.
- * - Interface Segregation Principle: Implements only necessary Observer methods.
- * - Dependency Inversion Principle: Depends on abstractions (Observer interface) rather than concrete implementations.
+ *
+ * SOLID Principles: - Single Responsibility Principle: Only responsible for displaying slides and responding to
+ * presentation changes. - Open/Closed Principle: Can be extended for new display functionality without modifying
+ * existing code. - Liskov Substitution Principle: Properly extends JComponent and implements Observer without changing
+ * their behavior. - Interface Segregation Principle: Implements only necessary Observer methods. - Dependency Inversion
+ * Principle: Depends on abstractions (Observer interface) rather than concrete implementations.
  */
 public class SlideViewerComponent extends JComponent implements Observer {
 
@@ -43,7 +42,7 @@ public class SlideViewerComponent extends JComponent implements Observer {
     /**
      * Creates a slide viewer component.
      *
-     * @param pres The presentation to display
+     * @param pres  The presentation to display
      * @param frame The parent frame for this component
      */
     public SlideViewerComponent(Presentation pres, JFrame frame) {
@@ -84,9 +83,9 @@ public class SlideViewerComponent extends JComponent implements Observer {
 
     /**
      * Updates the component with new presentation data.
-     * 
+     *
      * @param presentation The presentation
-     * @param data The slide data
+     * @param data         The slide data
      */
     public void update(Presentation presentation, Slide data) {
         if (data == null) {
@@ -103,7 +102,7 @@ public class SlideViewerComponent extends JComponent implements Observer {
      * Implementation of the Observer interface update method.
      *
      * @param subject The subject being observed (should be a Presentation)
-     * @param data The data (should be a Slide)
+     * @param data    The data (should be a Slide)
      */
     @Override
     public void update(Object subject, Object data) {
@@ -115,7 +114,8 @@ public class SlideViewerComponent extends JComponent implements Observer {
 
         if (data instanceof Slide) {
             this.slide = (Slide) data;
-        } else {
+        }
+        else {
             this.slide = pres.getCurrentSlide();
         }
 

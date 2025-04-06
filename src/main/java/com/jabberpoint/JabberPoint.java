@@ -12,18 +12,16 @@ import main.java.com.jabberpoint.util.Style;
 /**
  * JabberPoint Main Program
  * <p>
- * This program is distributed under the conditions of the attached
- * COPYRIGHT.txt file (which is NOT the GNU General Public License).
- * Please read it. Your use of the software constitutes acceptance
- * of the conditions mentioned in COPYRIGHT.txt.
+ * This program is distributed under the conditions of the attached COPYRIGHT.txt file (which is NOT the GNU General
+ * Public License). Please read it. Your use of the software constitutes acceptance of the conditions mentioned in
+ * COPYRIGHT.txt.
  * </p>
  *
- * SOLID Principles:
- * - Single Responsibility Principle: Only responsible for application startup and lifecycle management.
- * - Open/Closed Principle: Can be extended for new startup options without modifying existing code.
- * - Liskov Substitution Principle: Singleton instance can be safely used throughout the application.
- * - Interface Segregation Principle: Provides focused methods related to application control.
- * - Dependency Inversion Principle: Depends on abstractions (Accessor, Presentation) rather than concrete implementations.
+ * SOLID Principles: - Single Responsibility Principle: Only responsible for application startup and lifecycle
+ * management. - Open/Closed Principle: Can be extended for new startup options without modifying existing code. -
+ * Liskov Substitution Principle: Singleton instance can be safely used throughout the application. - Interface
+ * Segregation Principle: Provides focused methods related to application control. - Dependency Inversion Principle:
+ * Depends on abstractions (Accessor, Presentation) rather than concrete implementations.
  *
  * @version 2.0 - Gideon Dijkhuis - Update classes to instances
  */
@@ -37,11 +35,12 @@ public class JabberPoint {
     /**
      * Private constructor for singleton pattern.
      */
-    private JabberPoint() {}
+    private JabberPoint() {
+    }
 
     /**
      * Gets the singleton instance of JabberPoint.
-     * 
+     *
      * @return The singleton instance
      */
     public static JabberPoint getInstance() {
@@ -53,7 +52,7 @@ public class JabberPoint {
 
     /**
      * Exits the application with the specified exit code.
-     * 
+     *
      * @param n The exit code
      */
     public void exit(int n) {
@@ -62,7 +61,7 @@ public class JabberPoint {
 
     /**
      * Main method to start the application.
-     * 
+     *
      * @param args Command line arguments, optionally containing a filename
      */
     public static void main(String[] args) {
@@ -75,12 +74,14 @@ public class JabberPoint {
             if (args.length == 0) {
                 Accessor demoAccessor = accessorFactory.createDemoAccessor();
                 demoAccessor.loadFile(presentation, "");
-            } else {
+            }
+            else {
                 Accessor accessor = accessorFactory.getAccessorForFile(args[0]);
                 accessor.loadFile(presentation, args[0]);
             }
             presentation.setSlideNumber(0);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             JOptionPane.showMessageDialog(
                     null,
                     IO_ERR + ex,

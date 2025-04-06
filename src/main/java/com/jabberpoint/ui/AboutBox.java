@@ -5,21 +5,18 @@ import javax.swing.JOptionPane;
 
 /**
  * AboutBox component for displaying information about JabberPoint.
- * 
- * SOLID Principles:
- * - Single Responsibility Principle: Only responsible for displaying the about information.
- * - Open/Closed Principle: Can be extended without modifying by creating subclasses if needed.
- * - Dependency Inversion Principle: Depends on abstractions (Frame) rather than concrete implementations.
+ *
+ * SOLID Principles: - Single Responsibility Principle: Only responsible for displaying the about information. -
+ * Open/Closed Principle: Can be extended without modifying by creating subclasses if needed. - Dependency Inversion
+ * Principle: Depends on abstractions (Frame) rather than concrete implementations.
  */
-public class AboutBox
-{
+public class AboutBox {
     /**
      * Shows information about JabberPoint in a dialog box.
-     * 
+     *
      * @param parent The parent frame for the dialog
      */
-    public static void show(Frame parent)
-    {
+    public static void show(Frame parent) {
         JOptionPane.showMessageDialog(
                 parent,
                 "JabberPoint is a primitive slide-show program in Java(tm). It\n" +
