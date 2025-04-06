@@ -42,6 +42,6 @@ class BitmapItemTest {
 
     @Test
     void toString_returnsStringRepresentation() {
-        assertEquals("main.java.com.jabberpoint.util.BitmapItem[1,JabberPoint.jpg]", this.bitmapItem.toString());
+        assertEquals("BitmapItem[1,JabberPoint.jpg]", this.bitmapItem.toString());
     }
 }
