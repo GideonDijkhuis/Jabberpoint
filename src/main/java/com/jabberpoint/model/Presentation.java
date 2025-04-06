@@ -6,20 +6,12 @@ import main.java.com.jabberpoint.model.observer.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * <p>main.java.com.jabberpoint.model.Presentation houdt de slides in de presentatie bij.</p>
- * <p>Er is slechts een instantie van deze klasse aanwezig.</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.9 Gideon Dijkhuis - Updated slideNr checks
- */
-
 public class Presentation implements Subject
 {
-    private String showTitle; // de titel van de presentatie
-    private ArrayList<Slide> showList = null; // een ArrayList met de Slides
-    private int currentSlideNumber = 0; // het slidenummer van de huidige main.java.com.jabberpoint.model.Slide
-    private SlideViewerComponent slideViewComponent = null; // de viewcomponent voor de Slides
+    private String showTitle;
+    private ArrayList<Slide> showList = null;
+    private int currentSlideNumber = 0;
+    private SlideViewerComponent slideViewComponent = null;
     private static Presentation instance;
     private final List<Observer> observers = new ArrayList<>();
 
@@ -60,13 +52,11 @@ public class Presentation implements Subject
         this.slideViewComponent = slideViewerComponent;
     }
 
-    // geef het nummer van de huidige slide
     public int getSlideNumber()
     {
         return currentSlideNumber;
     }
 
-    // verander het huidige-slide-nummer en laat het aan het window weten.
     public void setSlideNumber(int slideNr)
     {
         if (!isSlideNRAvailable(slideNr))
@@ -78,7 +68,6 @@ public class Presentation implements Subject
         notifyObservers(getCurrentSlide());
     }
 
-    // ga naar de vorige slide tenzij je aan het begin van de presentatie bent
     public void prevSlide()
     {
         if (isSlideNRAvailable(this.currentSlideNumber - 1))
@@ -87,7 +76,6 @@ public class Presentation implements Subject
         }
     }
 
-    // Ga naar de volgende slide tenzij je aan het einde van de presentatie bent.
     public void nextSlide()
     {
         if (this.isSlideNRAvailable(this.currentSlideNumber + 1))
@@ -101,21 +89,18 @@ public class Presentation implements Subject
         return slideNr < this.showList.size() && slideNr >= 0;
     }
 
-    // Verwijder de presentatie, om klaar te zijn voor de volgende
     public void clear()
     {
         showList = new ArrayList<Slide>();
         setSlideNumber(-1);
     }
 
-    // Voeg een slide toe aan de presentatie
     public void append(Slide slide)
     {
         showList.add(slide);
         notifyObservers();
     }
 
-    // Geef een slide met een bepaald slidenummer
     public Slide getSlide(int number)
     {
         if (number < 0 || number >= getSize())
@@ -125,7 +110,6 @@ public class Presentation implements Subject
         return showList.get(number);
     }
 
-    // Geef de huidige main.java.com.jabberpoint.model.Slide
     public Slide getCurrentSlide()
     {
         return getSlide(currentSlideNumber);
@@ -161,7 +145,6 @@ public class Presentation implements Subject
             observer.update(this, data);
         }
 
-        // For backward compatibility
         if (slideViewComponent != null)
         {
             slideViewComponent.update(this, getCurrentSlide());

@@ -26,14 +26,13 @@ import java.io.IOException;
 public class BitmapItem extends SlideItem
 {
     private BufferedImage bufferedImage;
-    private String imageName;
+    private final String imageName;
 
     protected static final String FILE = "Bestand ";
     protected static final String NOTFOUND = " niet gevonden";
     protected static final int DEFAULT_WIDTH = 200;
     protected static final int DEFAULT_HEIGHT = 150;
 
-    // level staat voor het item-level; name voor de naam van het bestand met de afbeelding
     public BitmapItem(int level, String name)
     {
         super(level);
@@ -41,19 +40,16 @@ public class BitmapItem extends SlideItem
         loadImage();
     }
 
-    // Een leeg bitmap-item
     public BitmapItem()
     {
         this(0, null);
     }
 
-    // geef de bestandsnaam van de afbeelding
     public String getName()
     {
         return imageName;
     }
 
-    // Load the image from various sources
     private void loadImage()
     {
         if (imageName == null)
@@ -63,7 +59,6 @@ public class BitmapItem extends SlideItem
 
         bufferedImage = null;
 
-        // Try to load from file system
         try
         {
             File file = new File(imageName);
@@ -100,7 +95,6 @@ public class BitmapItem extends SlideItem
             System.err.println("Error loading from resource: " + e.getMessage());
         }
 
-        // Try to load from classpath root
         try
         {
             InputStream is = getClass().getClassLoader().getResourceAsStream(imageName);
@@ -118,7 +112,6 @@ public class BitmapItem extends SlideItem
             System.err.println("Error loading from classpath: " + e.getMessage());
         }
 
-        // Try to load from project root (for working dir)
         try
         {
             File rootFile = new File(System.getProperty("user.dir"), imageName);
@@ -136,11 +129,9 @@ public class BitmapItem extends SlideItem
             System.err.println("Error loading from project root: " + e.getMessage());
         }
 
-        // If all loading attempts failed
         System.err.println(FILE + imageName + NOTFOUND);
     }
 
-    // geef de bounding box van de afbeelding
     public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style myStyle)
     {
         if (bufferedImage == null)
@@ -159,7 +150,6 @@ public class BitmapItem extends SlideItem
         );
     }
 
-    // teken de afbeelding
     public void draw(int x, int y, float scale, Graphics g, Style myStyle, ImageObserver observer)
     {
         if (bufferedImage == null)
@@ -182,6 +172,6 @@ public class BitmapItem extends SlideItem
 
     public String toString()
     {
-        return "main.java.com.jabberpoint.util.BitmapItem[" + getLevel() + "," + imageName + "]";
+        return "BitmapItem[" + getLevel() + "," + imageName + "]";
     }
 }

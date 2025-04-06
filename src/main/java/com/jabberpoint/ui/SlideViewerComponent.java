@@ -7,20 +7,12 @@ import java.awt.*;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-
-/**
- * <p>main.java.com.jabberpoint.ui.SlideViewerComponent is een grafische component die Slides kan laten zien.</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.8 - Gideon Dijkhuis - Rename Java paths to normal text, created variable in instanceOfMethod
- */
-
 public class SlideViewerComponent extends JComponent implements Observer
 {
 
-    private Slide slide; // de huidige slide
-    private Font labelFont = null; // het font voor labels
-    private Presentation presentation = null; // de presentatie
+    private Slide slide;
+    private Font labelFont = null;
+    private Presentation presentation = null;
     private JFrame frame = null;
 
     private static final long serialVersionUID = 227L;
@@ -40,7 +32,6 @@ public class SlideViewerComponent extends JComponent implements Observer
         labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
         this.frame = frame;
 
-        // Register as an observer
         presentation.registerObserver(this);
     }
 
@@ -59,9 +50,6 @@ public class SlideViewerComponent extends JComponent implements Observer
         return new Dimension(Slide.WIDTH, Slide.HEIGHT);
     }
 
-    /**
-     * Legacy update method for backward compatibility
-     */
     public void update(Presentation presentation, Slide data)
     {
         if (data == null)
@@ -75,9 +63,6 @@ public class SlideViewerComponent extends JComponent implements Observer
         frame.setTitle(presentation.getTitle());
     }
 
-    /**
-     * Observer pattern update method
-     */
     @Override
     public void update(Object subject, Object data)
     {
@@ -101,7 +86,6 @@ public class SlideViewerComponent extends JComponent implements Observer
         frame.setTitle(pres.getTitle());
     }
 
-    // teken de slide
     public void paintComponent(Graphics g)
     {
         g.setColor(BGCOLOR);

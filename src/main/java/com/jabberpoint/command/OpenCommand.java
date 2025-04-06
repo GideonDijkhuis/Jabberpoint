@@ -22,20 +22,12 @@ public class OpenCommand implements Command
 
     protected static final String TESTFILE = "test.xml";
 
-    /**
-     * Constructor for main.java.com.jabberpoint.command.OpenCommand
-     *
-     * @param receiver The receiver that will handle the file operation
-     */
     public OpenCommand(FileReceiver receiver)
     {
         this.receiver = receiver;
         this.filename = TESTFILE;
     }
 
-    /**
-     * Execute the command by delegating to the receiver
-     */
     @Override
     public void execute()
     {

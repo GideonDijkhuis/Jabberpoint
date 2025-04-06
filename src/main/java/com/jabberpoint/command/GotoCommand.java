@@ -18,13 +18,6 @@ public class GotoCommand implements Command
     private final Frame frame;
     private final String prompt;
 
-    /**
-     * Constructor for main.java.com.jabberpoint.command.GotoCommand
-     *
-     * @param receiver The receiver that will handle the navigation
-     * @param frame    The parent frame for dialogs
-     * @param prompt   The prompt for the input dialog
-     */
     public GotoCommand(NavigationReceiver receiver, Frame frame, String prompt)
     {
         this.receiver = receiver;
@@ -32,9 +25,7 @@ public class GotoCommand implements Command
         this.prompt = prompt;
     }
 
-    /**
-     * Execute the command by delegating to the receiver
-     */
+
     @Override
     public void execute()
     {

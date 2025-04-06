@@ -48,39 +48,30 @@ public class JabberPoint
         System.exit(n);
     }
 
-    /**
-     * Het Main Programma
-     */
     public static void main(String[] args)
     {
 
         Style.createStyles();
 
-        // Create the presentation model (Subject in Observer pattern)
         Presentation presentation = Presentation.getInstance();
 
-        // Create the main frame (Observer in Observer pattern)
         SlideViewerFrame.getInstance(JABVERSION, presentation);
 
-        // Get the accessor factory
         AccessorFactory accessorFactory = AccessorFactory.getInstance();
 
         try
         {
             if (args.length == 0)
-            { // een demo presentatie
-                // Get demo accessor from factory
+            {
                 Accessor demoAccessor = accessorFactory.createDemoAccessor();
                 demoAccessor.loadFile(presentation, "");
             }
             else
             {
-                // Get appropriate accessor for the file
                 Accessor accessor = accessorFactory.getAccessorForFile(args[0]);
                 accessor.loadFile(presentation, args[0]);
             }
 
-            // This will trigger the Observer pattern updates
             presentation.setSlideNumber(0);
         }
         catch (IOException ex)

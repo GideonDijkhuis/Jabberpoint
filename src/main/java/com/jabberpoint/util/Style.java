@@ -3,19 +3,10 @@ package main.java.com.jabberpoint.util;
 import java.awt.Color;
 import java.awt.Font;
 
-/**
- * <p>main.java.com.jabberpoint.util.Style staat voor Indent, Color, Font and Leading.</p>
- * <p>De koppeling tussen style-nummer en item-level is nu direct:
- * in main.java.com.jabberpoint.model.Slide wordt de style opgehaald voor een item met als style-nummer het
- * item-level.</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.6 2014/05/16 Sylvia Stuurman
- */
 
 public class Style
 {
-    private static Style[] styles; // de styles
+    private static Style[] styles;
 
     private static final String FONTNAME = "Helvetica";
     int indent;
@@ -27,7 +18,7 @@ public class Style
     public static void createStyles()
     {
         styles = new Style[5];
-        // De styles zijn vast ingecodeerd.
+
         styles[0] = new Style(0, Color.red, 48, 20);    // style voor item-level 0
         styles[1] = new Style(20, Color.blue, 40, 10);    // style voor item-level 1
         styles[2] = new Style(50, Color.black, 36, 10);    // style voor item-level 2

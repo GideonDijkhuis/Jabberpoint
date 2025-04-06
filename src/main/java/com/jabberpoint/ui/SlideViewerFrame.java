@@ -9,13 +9,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import javax.swing.JFrame;
 
-/**
- * <p>Het applicatiewindow voor een slideviewcomponent</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.9 - Gideon Dijkhuis - Created Instances for SlideViewerFrame
- */
-
 public class SlideViewerFrame extends JFrame implements Observer
 {
     private static final long serialVersionUID = 3227L;
@@ -32,7 +25,6 @@ public class SlideViewerFrame extends JFrame implements Observer
         super(title);
         this.presentation = presentation;
 
-        // Register as an observer of the presentation
         presentation.registerObserver(this);
 
         SlideViewerComponent slideViewerComponent = new SlideViewerComponent(presentation, this);
@@ -60,7 +52,6 @@ public class SlideViewerFrame extends JFrame implements Observer
         return instance;
     }
 
-    // De GUI opzetten
     public void setupWindow(
             SlideViewerComponent
                     slideViewerComponent, Presentation presentation

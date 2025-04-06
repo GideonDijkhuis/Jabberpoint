@@ -13,16 +13,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.Serial;
 
-/**
- * <p>De controller voor het menu</p>
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.8 - Gideon Dijkhuis - Made some variables final, create local variables and update openCommand
- */
 public class MenuController extends MenuBar
 {
 
-    private final CommandFactory commandFactory; // Factory for creating commands
+    private final CommandFactory commandFactory;
 
     @Serial
     private static final long serialVersionUID = 227L;
@@ -48,18 +42,12 @@ public class MenuController extends MenuBar
 
     public MenuController(Frame frame, Presentation pres)
     {
-        // het frame, alleen gebruikt als ouder voor de Dialogs
-        // Er worden commando's gegeven aan de presentatie
-
-        // Initialize the factories
         commandFactory = CommandFactory.getInstance();
         commandFactory.setPresentation(pres);
         commandFactory.setFrame(frame);
 
-        // Factory for creating accessors
         AccessorFactory accessorFactory = AccessorFactory.getInstance();
 
-        // Create the menu structure
         createFileMenu();
         createViewMenu();
         createHelpMenu();
@@ -70,24 +58,20 @@ public class MenuController extends MenuBar
         MenuItem menuItem;
         Menu fileMenu = new Menu(FILE);
 
-        // Open command
         Command openCommand = commandFactory.createOpenCommand();
         fileMenu.add(menuItem = mkMenuItem(OPEN));
         menuItem.addActionListener(createActionListener(openCommand));
 
-        // New command
         Command newCommand = commandFactory.createNewCommand();
         fileMenu.add(menuItem = mkMenuItem(NEW));
         menuItem.addActionListener(createActionListener(newCommand));
 
-        // Save command
         Command saveCommand = commandFactory.createSaveCommand(SAVEFILE);
         fileMenu.add(menuItem = mkMenuItem(SAVE));
         menuItem.addActionListener(createActionListener(saveCommand));
 
         fileMenu.addSeparator();
 
-        // Exit command
         Command exitCommand = commandFactory.createExitCommand();
         fileMenu.add(menuItem = mkMenuItem(EXIT));
         menuItem.addActionListener(createActionListener(exitCommand));
@@ -100,17 +84,14 @@ public class MenuController extends MenuBar
         MenuItem menuItem;
         Menu viewMenu = new Menu(VIEW);
 
-        // Next slide command
         Command nextCommand = commandFactory.createNextSlideCommand();
         viewMenu.add(menuItem = mkMenuItem(NEXT));
         menuItem.addActionListener(createActionListener(nextCommand));
 
-        // Previous slide command
         Command prevCommand = commandFactory.createPrevSlideCommand();
         viewMenu.add(menuItem = mkMenuItem(PREV));
         menuItem.addActionListener(createActionListener(prevCommand));
 
-        // Go to slide command
         Command gotoCommand = commandFactory.createGotoCommand(PAGENR);
         viewMenu.add(menuItem = mkMenuItem(GOTO));
         menuItem.addActionListener(createActionListener(gotoCommand));
@@ -123,32 +104,18 @@ public class MenuController extends MenuBar
         MenuItem menuItem;
         Menu helpMenu = new Menu(HELP);
 
-        // About command
         Command aboutCommand = commandFactory.createAboutCommand();
         helpMenu.add(menuItem = mkMenuItem(ABOUT));
         menuItem.addActionListener(createActionListener(aboutCommand));
 
-        setHelpMenu(helpMenu); // needed for portability (Motif, etc.)
+        setHelpMenu(helpMenu);
     }
 
-    /**
-     * Create an ActionListener that executes a command
-     *
-     * @param command The command to execute
-     * @return ActionListener that executes the command
-     */
     public ActionListener createActionListener(final Command command)
     {
-        return new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                command.execute();
-            }
-        };
+        return e -> command.execute();
     }
 
-    // Create a menu item
     public MenuItem mkMenuItem(String name)
     {
         return new MenuItem(name, new MenuShortcut(name.charAt(0)));

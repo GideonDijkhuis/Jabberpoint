@@ -18,14 +18,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
-
-/**
- * main.java.com.jabberpoint.accessor.XMLAccessor, reads and writes XML files
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.7 2023/09/29 Bram Huiskes - Updated for Factory Method pattern
- */
-
 public class XMLAccessor extends Accessor
 {
 

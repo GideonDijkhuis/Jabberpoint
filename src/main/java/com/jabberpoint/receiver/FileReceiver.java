@@ -8,14 +8,6 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import java.awt.Frame;
 
-/**
- * <p>main.java.com.jabberpoint.receiver.FileReceiver implements the main.java.com.jabberpoint.receiver.Receiver
- * interface for file operation commands</p>
- * <p>This class knows how to perform file operations on a presentation</p>
- *
- * @author Bram Huiskes
- * @version 1.1 Gideon Dijkhuis - Updated finals
- */
 public class FileReceiver implements Receiver
 {
     private final Presentation presentation;
@@ -27,12 +19,6 @@ public class FileReceiver implements Receiver
     private static final String LOADERR = "Load Error";
     private static final String SAVEERR = "Save Error";
 
-    /**
-     * Constructor for main.java.com.jabberpoint.receiver.FileReceiver
-     *
-     * @param presentation The presentation to operate on
-     * @param frame        The parent frame for dialogs
-     */
     public FileReceiver(Presentation presentation, Frame frame)
     {
         this.presentation = presentation;
@@ -40,20 +26,12 @@ public class FileReceiver implements Receiver
         this.accessorFactory = AccessorFactory.getInstance();
     }
 
-    /**
-     * Create a new presentation
-     */
     public void newPresentation()
     {
         presentation.clear();
         frame.repaint();
     }
 
-    /**
-     * Open a presentation from a file
-     *
-     * @param filename The filename to open
-     */
     public void openPresentation(String filename)
     {
         presentation.clear();
@@ -73,11 +51,6 @@ public class FileReceiver implements Receiver
         frame.repaint();
     }
 
-    /**
-     * Save a presentation to a file
-     *
-     * @param filename The filename to save to
-     */
     public void savePresentation(String filename)
     {
         Accessor accessor = accessorFactory.getAccessorForFile(filename);

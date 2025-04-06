@@ -5,13 +5,6 @@ import main.java.com.jabberpoint.util.*;
 
 import java.io.IOException;
 
-/**
- * Een Demo-Presentatie
- *
- * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
- * @version 1.9 - Gideon Dijkhuis - Changed Java paths to normal text
- */
-
 public class DemoPresentation extends Accessor
 {
 
