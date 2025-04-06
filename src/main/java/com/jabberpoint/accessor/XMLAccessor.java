@@ -10,14 +10,28 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import main.java.com.jabberpoint.model.*;
-import main.java.com.jabberpoint.util.*;
-import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import main.java.com.jabberpoint.model.Presentation;
+import main.java.com.jabberpoint.model.Slide;
+import main.java.com.jabberpoint.model.SlideItem;
+import main.java.com.jabberpoint.util.BitmapItem;
+import main.java.com.jabberpoint.util.TextItem;
+
+/**
+ * SOLID Principles Applied:
+ * - Single Responsibility Principle: Only responsible for XML file operations
+ * - Open/Closed Principle: Can be extended without modification
+ * - Liskov Substitution Principle: Properly implements all Accessor methods
+ * - Interface Segregation Principle: Implements only necessary Accessor methods
+ * - Dependency Inversion Principle: Depends on abstractions not concrete implementations
+ *
+ * Accessor for loading and saving presentations in XML format.
+ */
 public class XMLAccessor extends Accessor
 {
 
@@ -39,14 +53,26 @@ public class XMLAccessor extends Accessor
     protected static final String UNKNOWNTYPE = "Unknown Element type";
     protected static final String NFE = "Number Format Exception";
 
-
+    /**
+     * Gets the title element's content from an XML element.
+     * 
+     * @param element The element containing the title
+     * @param tagName The tag name of the title element
+     * @return The title text
+     */
     private String getTitle(Element element, String tagName)
     {
         NodeList titles = element.getElementsByTagName(tagName);
         return titles.item(0).getTextContent();
-
     }
 
+    /**
+     * Loads a presentation from an XML file.
+     * 
+     * @param presentation The presentation to load data into
+     * @param filename The name of the XML file to load from
+     * @throws IOException If an I/O error occurs during loading
+     */
     public void loadFile(Presentation presentation, String filename) throws IOException
     {
         int slideNumber, itemNumber, max = 0, maxItems = 0;
@@ -92,6 +118,12 @@ public class XMLAccessor extends Accessor
         }
     }
 
+    /**
+     * Loads a slide item from an XML element.
+     * 
+     * @param slide The slide to add the item to
+     * @param item The XML element containing the item data
+     */
     protected void loadSlideItem(Slide slide, Element item)
     {
         int level = 1; // default
@@ -126,6 +158,13 @@ public class XMLAccessor extends Accessor
         }
     }
 
+    /**
+     * Saves a presentation to an XML file.
+     * 
+     * @param presentation The presentation to save
+     * @param filename The name of the file to save to
+     * @throws IOException If an I/O error occurs during saving
+     */
     public void saveFile(Presentation presentation, String filename) throws IOException
     {
         PrintWriter out = new PrintWriter(new FileWriter(filename));
@@ -145,7 +184,7 @@ public class XMLAccessor extends Accessor
             Vector<SlideItem> slideItems = slide.getSlideItems();
             for (int itemNumber = 0; itemNumber < slideItems.size(); itemNumber++)
             {
-                SlideItem slideItem = (SlideItem) slideItems.elementAt(itemNumber);
+                SlideItem slideItem = slideItems.elementAt(itemNumber);
                 out.print("<item kind=");
                 if (slideItem instanceof TextItem)
                 {

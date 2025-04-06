@@ -1,16 +1,21 @@
 package main.java.com.jabberpoint.command;
 
+import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
-import main.java.com.jabberpoint.receiver.*;
+import main.java.com.jabberpoint.receiver.FileReceiver;
 import main.java.com.jabberpoint.ui.SlideViewerFrame;
 
-import java.io.File;
-
 /**
- * <p>main.java.com.jabberpoint.command.OpenCommand implements the main.java.com.jabberpoint.command.Command interface
- * to open a presentation file</p>
+ * SOLID Principles Applied:
+ * - Single Responsibility Principle: Only responsible for opening a presentation file
+ * - Open/Closed Principle: Can be extended without modification
+ * - Liskov Substitution Principle: Properly implements the Command interface
+ * - Interface Segregation Principle: Uses only required methods from Command
+ * - Dependency Inversion Principle: Depends on abstractions (Command) not concrete implementations
+ *
+ * Command to open a presentation file.
  *
  * @author Bram Huiskes
  * @version 1.1 - Gideon Dijkhuis - Added testfile, added OpenFileDialog
@@ -22,12 +27,21 @@ public class OpenCommand implements Command
 
     protected static final String TESTFILE = "test.xml";
 
+    /**
+     * Creates a new command for opening a presentation file.
+     *
+     * @param receiver The file receiver to handle the command
+     */
     public OpenCommand(FileReceiver receiver)
     {
         this.receiver = receiver;
         this.filename = TESTFILE;
     }
 
+    /**
+     * Executes the command to open a presentation file.
+     * Shows a file chooser dialog and opens the selected file.
+     */
     @Override
     public void execute()
     {

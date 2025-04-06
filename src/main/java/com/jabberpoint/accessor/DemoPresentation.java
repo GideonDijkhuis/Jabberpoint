@@ -1,13 +1,30 @@
 package main.java.com.jabberpoint.accessor;
 
-import main.java.com.jabberpoint.model.*;
-import main.java.com.jabberpoint.util.*;
-
 import java.io.IOException;
 
+import main.java.com.jabberpoint.model.Presentation;
+import main.java.com.jabberpoint.model.Slide;
+import main.java.com.jabberpoint.util.BitmapItem;
+
+/**
+ * SOLID Principles Applied:
+ * - Single Responsibility Principle: Only responsible for providing demo content
+ * - Open/Closed Principle: Can be extended without modification
+ * - Liskov Substitution Principle: Properly implements all Accessor methods
+ * - Interface Segregation Principle: Implements only necessary Accessor methods
+ * - Dependency Inversion Principle: Depends on abstractions not concrete implementations
+ *
+ * Accessor that provides a demonstration presentation with example slides.
+ */
 public class DemoPresentation extends Accessor
 {
 
+    /**
+     * Loads a demo presentation with sample content.
+     * 
+     * @param presentation The presentation to load data into
+     * @param unusedFilename Not used in this implementation
+     */
     public void loadFile(Presentation presentation, String unusedFilename)
     {
         presentation.setTitle("Demo Presentation");
@@ -40,6 +57,13 @@ public class DemoPresentation extends Accessor
         presentation.append(slide);
     }
 
+    /**
+     * Not supported for demo presentations.
+     * 
+     * @param presentation The presentation to save
+     * @param unusedFilename Not used in this implementation
+     * @throws IOException Always thrown as this operation is not supported
+     */
     public void saveFile(Presentation presentation, String unusedFilename) throws IOException
     {
         throw new IOException("Save As->Demo! called");
